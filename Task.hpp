@@ -2,6 +2,9 @@
 #define TASK
 
 #include <string>
+#include <iostream>
+#include <ctime>
+
 using namespace std;
 
 class Task{
@@ -20,17 +23,16 @@ class Task{
     */
 
    private:
-   //Obligatoires lors de la construction
    int id;
    string title;
-
-   //attributs non obligatoires
    string description;
-   
+   float pourcentage;
+   tm *starting_date;
+   tm *ending_date;
 
    public:
-   Task();
-
+   Task(int _id, string _title);
+   Task(int _id, string _title, tm *_starting_date, )
 };
 
 #endif
