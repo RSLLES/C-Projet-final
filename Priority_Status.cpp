@@ -10,7 +10,7 @@ Priority::Priority() : index(NORMAL) {} //Par défaut, on reste en normal
 
 //Méthodes
 string Priority::GetPriority() {
-    if (0 <= index < NB_PRIORITY )
+    if (0 <= index && index < NB_PRIORITY )
     {
         return list[index];
     }
@@ -20,7 +20,7 @@ string Priority::GetPriority() {
 void Priority::SetPriority(int _index) {
     //On vérifie si l'index est cohérent, c'est à dire qu'il est bien compris entre 0 et NB_PRIORITY - 1
     //Sinon, on le met à -1, signe d'une erreur
-    if (0 <= _index < NB_PRIORITY )
+    if (0 <= _index  && _index < NB_PRIORITY )
     {
         index = _index;
     }
