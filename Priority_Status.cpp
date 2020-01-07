@@ -46,13 +46,6 @@ void ListeDETats::Set(string _etat) {
     Set(i);
 }
 
-void ListeDETats::PrintList(){
-    for (int i = 0; i < n; i++)
-    {
-        cout << list[i] << endl;
-    }
-}
-
 
 //############################
 //Priority

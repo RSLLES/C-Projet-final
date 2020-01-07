@@ -33,7 +33,6 @@ class ListeDETats{
     string Get();
     void Set(int _index);
     void Set(string _etat);
-    void PrintList();
 };
 
 
