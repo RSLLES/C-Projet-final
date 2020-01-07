@@ -5,10 +5,10 @@ using namespace std;
 int main(){
     Priority p;
     cout << p.Get() << endl;
-    p.Set("Hight");
+    p.Set(1);
     cout << p.Get() << endl;
-    p.Set(2);
+    p.Set("Low");
     cout << p.Get() << endl;
-    p.Set(3);
+    p.Set(4);
     cout << p.Get() << endl;
 };
