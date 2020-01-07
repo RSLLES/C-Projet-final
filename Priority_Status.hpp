@@ -1,36 +1,54 @@
 #ifndef PRIORITYSTATUS
 #define PRIORITYSTATUS
 
-//Constante donnant le nombre de possibilités possible pour la priorité
-#define NB_PRIORITY 3
-//Constante donnant l'index de la priorité "normale" utilisée par défaut
-#define NORMAL 1
-
 #include <string>
 #include <iostream>
 using namespace std;
 
-class Priority{
+class ListeDETats{
     /*
-    Class définissant une priorité. Cet objet est formé d'un tableau de taille fixe prédéfinie contenant toutes les possibilités
-    de priorités aux nombres de NB_PRIORITY, et d'un entier comportant l'index de la priorité utilisée.
-    La fonction SetPriority permet de changer la priorité en cours. Une surcharge de cette fonction permet de définir une nouvelle priorité
-    à la fois par du texte mais aussi en utilisant l'index. 
-    Si jamais une erreur est faites sur le texte ou bien sur l'index, ce dernier prend la valeur -1, signe d'une erreur.
-    Les constructeurs se basent sur la fonction SetPriority.
-    La fonction GetPriority retourne simplement une chaine de caractères comportant le nom de la priorité en cours.
+    Class définissant une liste d'état, qui nous servira pour créer à la fois l'objet priorité et l'objet status.
+    Attributs :
+    - n:        nombre d'état possible, qui correspond donc également à la longeur du tableau.
+    - list:     un tableau d'une taille fixe prédéfinie contenant toutes les possibilités d'états.
+    - index:    un entier comportant l'index de l'état en cours.
+
+    Méthodes :
+    - Set:  Permet de changer l'état en cours à l'aide de l'index ou par du texte.
+            Si jamais une erreur est faites sur le texte ou bien sur l'index, ce dernier prend la valeur -1, signe d'une erreur.
+    - Get:  Getretourne simplement une chaine de caractères comportant le nom de l'état en cours, extrait de liste.
+
+    Constructeurs :
+    Le constructeurs n'est rien de plus qu'un appel à Set, il peut donc prendre en entré un string ou l'index.
+    Par défaut, le constructeur attribut l'index 0 comme état. Dans la liste, l'état voulu par défaut doit donc avoir comme indice 0.
     */
-    string list[NB_PRIORITY] = {"Hight", "Normal", "Low"};
+    protected:
+    int n;
+    string *list;
     int index;
 
     public:
-    Priority();
-    Priority(int _index);
-    Priority(string _priority);
+    ListeDETats();
+    ListeDETats(int _n, string*_list, int _index);
+    ListeDETats(int _n, string*_list, string _etat);
 
-    string GetPriority();
-    void SetPriority(int _index);
-    void SetPriority(string _priority);
+    string Get();
+    void Set(int _index);
+    void Set(string _etat);
 };
+
+
+
+class Priority : public ListeDETats
+{
+    /*
+    Classe déinissant une priorité, qui n'est rien d'autre qu'une liste d'état particulière.
+    */
+   public:
+   Priority();
+   Priority(string);
+   Priority(int);
+};
+
 
 #endif

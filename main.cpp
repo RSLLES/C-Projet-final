@@ -4,11 +4,11 @@ using namespace std;
 
 int main(){
     Priority p;
-    cout << p.GetPriority() << endl;
-    p.SetPriority("Hight");
-    cout << p.GetPriority() << endl;
-    p.SetPriority(2);
-    cout << p.GetPriority() << endl;
-    p.SetPriority(3);
-    cout << p.GetPriority() << endl;
+    cout << p.Get() << endl;
+    p.Set("Hight");
+    cout << p.Get() << endl;
+    p.Set(2);
+    cout << p.Get() << endl;
+    p.Set(3);
+    cout << p.Get() << endl;
 };
