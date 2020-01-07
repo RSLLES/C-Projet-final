@@ -6,7 +6,8 @@ using namespace std;
 //###########################################
 //ListeDETats
 //###########################################
-ListeDETats::ListeDETats(int _n, string* _liste, int _index) : n(_n), list(_liste), index(_index) {Set(index);}
+ListeDETats::ListeDETats(int _n, string* _liste, int _index) : n(_n), list(_liste) {Set(_index);}
+ListeDETats::ListeDETats(int _n, string* _liste, string _etats) : n(_n), list(_liste) {Set(_etats);}
 
 //Méthodes
 string ListeDETats::Get() {
@@ -57,4 +58,13 @@ void ListeDETats::PrintList(){
 //Priority
 //############################
 Priority::Priority() : Priority(0) {}
-Priority::Priority(int _index) : ListeDETats(3, new string[3] {"Normal", "Hight", "Low"}, _index){}
+Priority::Priority(int _index) : ListeDETats(3, new string[3] {"Normal", "High", "Low"}, _index){}
+Priority::Priority(string _priority) : ListeDETats(3, new string[3] {"Normal", "High", "Low"}, _priority){}
+
+
+//############################
+//Status
+//############################
+Status::Status() : Status(0) {}
+Status::Status(int _index) : ListeDETats(3, new string[3] {"Open", "Close", "In Progress"}, _index){}
+Status::Status(string _status) : ListeDETats(3, new string[3] {"Open", "Close", "In Progress"}, _status){}

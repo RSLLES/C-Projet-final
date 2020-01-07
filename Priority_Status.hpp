@@ -23,12 +23,13 @@ class ListeDETats{
     Par défaut, le constructeur attribut l'index 0 comme état. Dans la liste, l'état voulu par défaut doit donc avoir comme indice 0.
     */
     protected:
-    int n;
-    string *list;
+    const int n;
+    const string *list;
     int index;
 
     public:
     ListeDETats(int _n, string* _liste, int _index);
+    ListeDETats(int _n, string* _liste, string _etats);
     string Get();
     void Set(int _index);
     void Set(string _etat);
@@ -41,10 +42,27 @@ class Priority : public ListeDETats
 {
     /*
     Classe déinissant une priorité, qui n'est rien d'autre qu'une liste d'état particulière.
+    Le constructeur utilise celui de ListeDEtats en donnant pour liste le tableau {"Normal", "High", "Low"},
+    et donc pour n la valeur 3.
     */
     public:
     Priority(int _index);
+    Priority(string _priority);
     Priority();
+};
+
+
+class Status : public ListeDETats
+{
+    /*
+    Classe déinissant un status, qui n'est rien d'autre qu'une liste d'état particulière.
+    Le constructeur utilise celui de ListeDEtats en donnant pour liste le tableau {"Open", "Close", "In Progress"},
+    et donc pour n la valeur 3.
+    */
+    public:
+    Status(int _index);
+    Status(string _status);
+    Status();
 };
 
 
