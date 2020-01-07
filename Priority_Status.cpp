@@ -6,7 +6,7 @@ using namespace std;
 //Constructeurs
 Priority::Priority(int _index) {SetPriority(_index);}
 Priority::Priority(string _priority) {SetPriority(_priority);}
-Priority::Priority(int _index) : index(NORMAL) {} //Par défaut, on reste en normal
+Priority::Priority() : index(NORMAL) {} //Par défaut, on reste en normal
 
 //Méthodes
 string Priority::GetPriority() {
