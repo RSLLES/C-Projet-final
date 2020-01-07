@@ -28,13 +28,11 @@ class ListeDETats{
     int index;
 
     public:
-    ListeDETats();
-    ListeDETats(int _n, string*_list, int _index);
-    ListeDETats(int _n, string*_list, string _etat);
-
+    ListeDETats(int _n, string* _liste, int _index);
     string Get();
     void Set(int _index);
     void Set(string _etat);
+    void PrintList();
 };
 
 
@@ -44,10 +42,9 @@ class Priority : public ListeDETats
     /*
     Classe déinissant une priorité, qui n'est rien d'autre qu'une liste d'état particulière.
     */
-   public:
-   Priority();
-   Priority(string);
-   Priority(int);
+    public:
+    Priority(int _index);
+    Priority();
 };
 
 

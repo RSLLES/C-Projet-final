@@ -6,29 +6,7 @@ using namespace std;
 //###########################################
 //ListeDETats
 //###########################################
-
-//Constructeurs
-ListeDETats::ListeDETats() : n(0), index(0) {}
-
-ListeDETats::ListeDETats(int _n, string*_list, int _index) : n(_n) 
-{   
-    //On créer la liste
-    list = _list;
-
-    //On définit l'index
-    Set(_index);
-}
-
-ListeDETats::ListeDETats(int _n, string*_list, string _etat) : n(_n) 
-{   
-    //On créer la liste
-    list = _list;
-
-    //On définit l'index
-    Set(_etat);
-}
-
-
+ListeDETats::ListeDETats(int _n, string* _liste, int _index) : n(_n), list(_liste), index(_index) {Set(index);}
 
 //Méthodes
 string ListeDETats::Get() {
@@ -67,18 +45,16 @@ void ListeDETats::Set(string _etat) {
     Set(i);
 }
 
+void ListeDETats::PrintList(){
+    for (int i = 0; i < n; i++)
+    {
+        cout << list[i] << endl;
+    }
+}
+
 
 //############################
 //Priority
 //############################
 Priority::Priority() : Priority(0) {}
-Priority::Priority(int _index){
-    int _n = 3;
-    string _liste[_n] = {"Normal", "Hight", "Low"};
-    ListeDETats(_n, _liste, _index);
-}
-Priority::Priority(string  _priority){
-    int _n = 3;
-    string _liste[_n] = {"Normal", "Hight", "Low"};
-    ListeDETats(_n, _liste, _priority);
-}
+Priority::Priority(int _index) : ListeDETats(3, new string[3] {"Normal", "Hight", "Low"}, _index){}
