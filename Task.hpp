@@ -5,6 +5,7 @@
 #include <iostream>
 #include <ctime>
 #include "Priority_Status.hpp"
+#include "Date.hpp"
 using namespace std;
 
 class Task{
@@ -30,13 +31,47 @@ class Task{
    string title;
    string description;
    float pourcentage;
-   tm *starting_date;
-   tm *ending_date;
+   Date *starting_date;
+   Date *ending_date;
    Priority priority;
    Status status;
 
    public:
    Task(int _id, string _title);
+   ~Task(); //Un destructeur est obligatoire comme les dates sont des pointeurs
+
+   void Print();
+};
+
+
+
+class TasksManager{
+    /* C'est une sorte de liste de Taches, mais avec plusieurs fonctions pratique pour travailler specifiquement avec ces objets.
+    Constructeur :
+    - Par défaut, la liste est vide
+    - On peut également la charger depuis un fichier
+    - On peut égalment lui fournir directement une liste avec laquelle travailler
+
+    Attributs:
+    liste : C'est une liste de pointeurs vers des objets Taches. C'est eux que l'on manipule par toutes les fonctions
+
+    Méthodes principales:
+    - Add : Ajoute la tache donné dans la liste. Une vérification de l'unicité de l'ID est faites
+    - Delete : Supprime la tache en question de la liste
+    
+    Méthode de recherches :
+    - FindByPriority : 
+
+    Méthode utilitaires :
+    - GetNewID : Renvoie un ID non utilisé pour la suivante
+    - CheckIfIDIsAlreadyUsed : Assez explicite
+     */
+
+    public:
+    TasksManager();
+    TasksManager(string filePath);
+
+
 };
 
 #endif
