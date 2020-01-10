@@ -2,3 +2,4 @@ main.o
 out.exe
 Priority_Status.o
 .vscode/settings.json
+Date.o
