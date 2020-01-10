@@ -18,5 +18,5 @@ Date::Date(){
 
 void Date::Print()
 {
-    std::cout << day << "/" << month << "/" << year << std::endl;
+    std::cout << day << "/" << month << "/" << year;
 }
