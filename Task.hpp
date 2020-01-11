@@ -73,12 +73,14 @@ class TasksManager{
      */
 
     private:
-    vector<Task> liste;
+    vector<Task*> liste;
 
     public:
     TasksManager();
     TasksManager(string filePath);
-    TasksManager(vector<Task> _liste);
+    TasksManager(vector<Task*> _liste);
+
+    void Add(Task* task);
 
     bool SaveToFile(string filePath);
 };

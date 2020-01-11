@@ -5,6 +5,7 @@
 #include <fstream>
 #include <vector>
 #include <sstream>
+#include <fstream>
 using namespace std;
 
 //###########################
@@ -90,9 +91,24 @@ string Task::StringToExport(){
 //##########################
 
 TasksManager::TasksManager() : liste() {}
-TasksManager::TasksManager(vector<Task> _liste) : liste(_liste) {}
-TasksManager::TasksManager(string filePath) {
+TasksManager::TasksManager(vector<Task*> _liste) : liste(_liste) {}
+TasksManager::TasksManager(string filePath): liste() {
     //On ouvre le fichier
+    string line;
+    ifstream myfile (filePath);
+    if (myfile.is_open())
+    {
+        while (getline(myfile,line))
+        {
+            liste.push_back(new Task(line));
+        }
+        myfile.close();
+    }
+    else
+    {
+        cout << "Impossible d'ouvrir " << filePath << " dans le constructeur de TasksManager";
+    }
+    
 }
 
 
@@ -103,10 +119,16 @@ bool TasksManager::SaveToFile(string filePath){
     {
         for(int i(0); i < liste.size(); ++i)
         {
-            myfile << liste[i].StringToExport() << endl;
+            myfile << liste[i]->StringToExport() << endl;
         }
         return true;
     }
     cout << "Unable to open file " << filePath << endl;
     return false;
+}
+
+
+void TasksManager::Add(Task* task)
+{
+    liste.push_back(task);
 }

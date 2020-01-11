@@ -1,5 +1,6 @@
 #include "Task.hpp"
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 int main(int argc, char *argv[]){
@@ -24,10 +25,11 @@ int main(int argc, char *argv[]){
         //Si l'on a trouve un titre, alors on peut creer la tache
         if (title != nullptr){
             //On charge le TaskManager
-            
-            Task t(1, *title);
-            cout << "Tache ajoutee." << endl;
-            t.Print();
+            TasksManager T("Data.txt");
+            //On ajoute notre Tache
+            T.Add(new Task(1, *title));
+            //On enregistre
+            T.SaveToFile("Data.txt");
             //On désactive l'aide
             help = false;
         }
