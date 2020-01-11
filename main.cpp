@@ -23,6 +23,8 @@ int main(int argc, char *argv[]){
 
         //Si l'on a trouve un titre, alors on peut creer la tache
         if (title != nullptr){
+            //On charge le TaskManager
+            
             Task t(1, *title);
             cout << "Tache ajoutee." << endl;
             t.Print();
