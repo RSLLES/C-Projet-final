@@ -20,3 +20,11 @@ void Date::Print()
 {
     std::cout << day << "/" << month << "/" << year;
 }
+
+int Date::GetDay() {return day;}
+int Date::GetMonth() {return month;}
+int Date::GetYear() {return year;}
+
+void Date::SetDay(int _day) {day = _day;}
+void Date::SetMonth(int _month) {month = _month;}
+void Date::SetYear(int _year) {year = _year;}
