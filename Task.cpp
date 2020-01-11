@@ -17,6 +17,18 @@ Task::Task(int _id, string _title) : id(_id), title(_title), description(), pour
     starting_date = new Date();
 }
 
+vector<string> split(const string& s, char delimiter)
+{
+   vector<string> tokens;
+   string token;
+   istringstream tokenStream(s);
+   while (getline(tokenStream, token, delimiter))
+   {
+      tokens.push_back(token);
+   }
+   return tokens;
+}
+
 Task::Task(string line) : id(-1), title("ERROR"), description(), pourcentage(0), priority(), status(){
     starting_date = new Date();
     //Au cas ou le ficheir serait illisible, on créer une tache de type ERREUR
@@ -45,18 +57,6 @@ Task::Task(string line) : id(-1), title("ERROR"), description(), pourcentage(0),
         pourcentage = stoi(elements[10]);
         priority.Set(elements[11]);
     }
-}
-
-vector<string> split(const string& s, char delimiter)
-{
-   vector<string> tokens;
-   string token;
-   istringstream tokenStream(s);
-   while (getline(tokenStream, token, delimiter))
-   {
-      tokens.push_back(token);
-   }
-   return tokens;
 }
 
 Task::~Task(){delete starting_date; delete ending_date;}

@@ -30,7 +30,7 @@ class Task{
    int id;
    string title;
    string description;
-   float pourcentage;
+   int pourcentage;
    Date *starting_date;
    Date *ending_date;
    Priority priority;
