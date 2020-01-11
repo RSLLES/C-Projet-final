@@ -31,8 +31,8 @@ Task::Task(string line) : id(-1), title("ERROR"), description(), pourcentage(0),
     //On créer la tache à partir de ce qui est noté dans la ligne.
     //On utilise pour cela la fonction split qui coupe au niveau des ; en renvoyant un vector<string>
     vector<string> elements(split(line, ';'));
-    if (elements.size() != 12 || elements.size() != 9){ //Si jamais il n'y a pas le bon nombre d'éléments
-        cout << "Impossible de construire la tache à partir de : " << line << endl;
+    if (elements.size() != 12 && elements.size() != 9){ //Si jamais il n'y a pas le bon nombre d'éléments
+        cout << "Impossible de construire la tache a partir de : " << line << endl;
     }
     else
     {
@@ -45,13 +45,19 @@ Task::Task(string line) : id(-1), title("ERROR"), description(), pourcentage(0),
         starting_date->SetYear(stoi(elements[5]));
 
         //On ne créer la date de fin que si elle existe
-        if ( elements.size() == 12){
+        if (elements.size() == 12){
             ending_date = new Date(stoi(elements[6]),stoi(elements[7]),stoi(elements[8]));
+            status.Set(elements[9]);
+            pourcentage = stoi(elements[10]);
+            priority.Set(elements[11]);
         }
-
-        status.Set(elements[9]);
-        pourcentage = stoi(elements[10]);
-        priority.Set(elements[11]);
+        else
+        {
+            status.Set(elements[6]);
+            pourcentage = stoi(elements[7]);
+            priority.Set(elements[8]);
+        }
+        
     }
 }
 
