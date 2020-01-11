@@ -3,7 +3,7 @@
 
 #include <string>
 #include <iostream>
-#include <ctime>
+#include <vector>
 #include "Priority_Status.hpp"
 #include "Date.hpp"
 using namespace std;
@@ -38,9 +38,11 @@ class Task{
 
    public:
    Task(int _id, string _title);
+   Task(string text); //Recréer la tache a partir de sa forme exportée, lisibile dans un fichier
    ~Task(); //Un destructeur est obligatoire comme les dates sont des pointeurs
 
    void Print();
+   string StringToExport(); //Retourne une chaine de caractère transcrivant les attributs de la tache, afin de l'exporter dans un fichier
 };
 
 
@@ -53,11 +55,12 @@ class TasksManager{
     - On peut égalment lui fournir directement une liste avec laquelle travailler
 
     Attributs:
-    liste : C'est une liste de pointeurs vers des objets Taches. C'est eux que l'on manipule par toutes les fonctions
+    - liste : C'est une liste de pointeurs vers des objets Taches. C'est cette liste qui est manipulé par toutes
+    les autres fonctions
 
     Méthodes principales:
     - Add : Ajoute la tache donné dans la liste. Une vérification de l'unicité de l'ID est faites
-    - Delete : Supprime la tache en question de la liste
+    - Delete : Supprime la tache en question de la liste.
     
     Méthode de recherches :
     - FindByPriority : 
@@ -65,13 +68,19 @@ class TasksManager{
     Méthode utilitaires :
     - GetNewID : Renvoie un ID non utilisé pour la suivante
     - CheckIfIDIsAlreadyUsed : Assez explicite
+    - SaveToFile : Enregistre l'état actuel dans un fichier, qui pourra être importé pour recharger l'objet TaskManager.
+    La convention utilisé pour enregistrer le fichier est expliquer dans la définition de la fonction, dans Task.cpp
      */
+
+    private:
+    vector<Task> liste;
 
     public:
     TasksManager();
     TasksManager(string filePath);
+    TasksManager(vector<Task> _liste);
 
-
+    bool SaveToFile(string filePath);
 };
 
 #endif
