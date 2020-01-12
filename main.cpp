@@ -27,7 +27,7 @@ int main(int argc, char *argv[]){
             //On charge le TaskManager
             TasksManager T("Data.txt");
             //On ajoute notre Tache
-            T.Add(new Task(1, *title));
+            T.Add(new Task(T.GetNewID(), *title));
             //On enregistre
             T.SaveToFile("Data.txt");
             //On désactive l'aide
