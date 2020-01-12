@@ -88,7 +88,16 @@ string Task::StringToExport(){
 int Task::GetID(){return id;}
 
 void Task::SetDescription(string _description){description = _description;}
-
+void Task::SetStartingDate(int _day, int _month, int _year) {delete starting_date; starting_date = new Date(_day, _month, _year);}
+void Task::SetStartingDate(string line) {
+    vector<string> s(split(line, '/'));
+    if (s.size() != 3){
+        cout << "ERREUR : Impossible de convertir '" << line << "' en une Date" << endl;
+        return;
+    }
+    delete starting_date;
+    starting_date = new Date(stoi(s[0]),stoi(s[1]),stoi(s[2]));
+}
 
 //##########################
 //TasksManager
