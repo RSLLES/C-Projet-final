@@ -26,12 +26,16 @@ int main(int argc, char *argv[]){
         if (title != nullptr){
             //On charge le TaskManager
             TasksManager T("Data.txt");
-            //On ajoute notre Tache
-            T.Add(new Task(T.GetNewID(), *title));
+            //On créer et ajoute notre Tache
+            Task *t = new Task(T.GetNewID(), *title);
+            T.Add(t);
             //On enregistre
             T.SaveToFile("Data.txt");
             //On désactive l'aide
             help = false;
+            //On affiche un retour
+            t->Print();
+            cout << "Tache ajoutée." << endl;
         }
         //Sinon, il y a une erreur et l'on affiche l'aide
         else
