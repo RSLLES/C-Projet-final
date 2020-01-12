@@ -11,6 +11,7 @@ int main(int argc, char *argv[]){
     if (((string)argv[1]) == "create"){
         //ARGUMENTS OBLIGATOIRES A CHERCHER
         string *title = nullptr;
+        string *description = nullptr;
         bool help = true;
         
         //On cherche --title qui doit exister apres create et avant le derneir element (qui si il existe, est le nom du titre)
@@ -18,6 +19,10 @@ int main(int argc, char *argv[]){
         for (int i = 2; i < argc-1; i++){
             if (((string)argv[i]) == "--title"){
                 title = new string(argv[i+1]);
+                i++; //Ca ne sert à rien de retraiter le caractere precedent
+            }
+            if (((string)argv[i]) == "--description"){
+                description = new string(argv[i+1]);
                 i++; //Ca ne sert à rien de retraiter le caractere precedent
             }
         }
@@ -28,6 +33,9 @@ int main(int argc, char *argv[]){
             TasksManager T("Data.txt");
             //On créer et ajoute notre Tache
             Task *t = new Task(T.GetNewID(), *title);
+            //On ajoute la description si nécessaire
+            if (description != nullptr)
+                t->SetDescription(*description);
             T.Add(t);
             //On enregistre
             T.SaveToFile("Data.txt");
