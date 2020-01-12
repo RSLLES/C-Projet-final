@@ -85,9 +85,9 @@ string Task::StringToExport(){
     return s;
 }
 
-int Task::GetID(){
-    return id;
-}
+int Task::GetID(){return id;}
+
+void Task::SetDescription(string _description){description = _description;}
 
 
 //##########################

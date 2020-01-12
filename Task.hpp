@@ -43,7 +43,10 @@ class Task{
 
    void Print();
    string StringToExport(); //Retourne une chaine de caractère transcrivant les attributs de la tache, afin de l'exporter dans un fichier
+   
    int GetID(); //Retourne ID
+
+   void SetDescription(string); //Permet de modifier la description
 };
 
 
