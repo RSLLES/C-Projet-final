@@ -12,6 +12,7 @@ int main(int argc, char *argv[]){
         //ARGUMENTS OBLIGATOIRES A CHERCHER
         string *title = nullptr;
         string *description = nullptr;
+        string *date = nullptr;
         bool help = true;
         
         //On cherche --title qui doit exister apres create et avant le derneir element (qui si il existe, est le nom du titre)
@@ -21,9 +22,13 @@ int main(int argc, char *argv[]){
                 title = new string(argv[i+1]);
                 i++; //Ca ne sert à rien de retraiter le caractere precedent
             }
-            if (((string)argv[i]) == "--description"){
+            else if (((string)argv[i]) == "--description"){
                 description = new string(argv[i+1]);
-                i++; //Ca ne sert à rien de retraiter le caractere precedent
+                i++;
+            }
+            else if (((string)argv[i]) == "--date"){
+                date = new string(argv[i+1]);
+                i++;
             }
         }
 
@@ -33,10 +38,19 @@ int main(int argc, char *argv[]){
             TasksManager T("Data.txt");
             //On créer et ajoute notre Tache
             Task *t = new Task(T.GetNewID(), *title);
-            //On ajoute la description si nécessaire
-            if (description != nullptr)
-                t->SetDescription(*description);
             T.Add(t);
+            
+            //On ajoute ensuite les autres arguments si ils sont spécifiés
+            //La Description
+            if (description != nullptr){
+                t->SetDescription(*description);
+            }
+            //La Date
+            if (date != nullptr){
+                t->SetStartingDate(*date);
+            }
+
+
             //On enregistre
             T.SaveToFile("Data.txt");
             //On désactive l'aide
