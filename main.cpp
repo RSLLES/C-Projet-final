@@ -51,6 +51,10 @@ int main(int argc, char *argv[]){
             cout << "Erreur : le parametre '--title' est indispensable dans la creation d'une liste" << endl;
         }
 
+        //On detruit les pointeurs utilisés
+        delete title;
+        delete description;
+
 
         //Enfin, on affiche l'aide si necessaire
         if (help){
