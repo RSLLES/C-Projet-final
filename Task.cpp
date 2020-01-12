@@ -85,6 +85,10 @@ string Task::StringToExport(){
     return s;
 }
 
+int Task::GetID(){
+    return id;
+}
+
 
 //##########################
 //TasksManager
@@ -131,4 +135,15 @@ bool TasksManager::SaveToFile(string filePath){
 void TasksManager::Add(Task* task)
 {
     liste.push_back(task);
+}
+
+int TasksManager::GetNewID() {
+    //On trouve simplement le plus grand ID, et l'on renvoie l'entier naturel suivant
+    int max = 0;
+    for (int i(0); i < liste.size(); i++){
+        if (liste[i]->GetID() > max){
+            max = liste[i]->GetID();
+        }
+    }
+    return max+1;
 }

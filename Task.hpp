@@ -43,6 +43,7 @@ class Task{
 
    void Print();
    string StringToExport(); //Retourne une chaine de caractère transcrivant les attributs de la tache, afin de l'exporter dans un fichier
+   int GetID(); //Retourne ID
 };
 
 
@@ -82,6 +83,7 @@ class TasksManager{
 
     void Add(Task* task);
 
+    int GetNewID();
     bool SaveToFile(string filePath);
 };
 
