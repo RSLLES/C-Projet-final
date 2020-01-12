@@ -35,7 +35,7 @@ int main(int argc, char *argv[]){
             help = false;
             //On affiche un retour
             t->Print();
-            cout << "Tache ajoutée." << endl;
+            cout << endl << "Tache ajoutee." << endl;
         }
         //Sinon, il y a une erreur et l'on affiche l'aide
         else
