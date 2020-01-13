@@ -13,6 +13,7 @@ int main(int argc, char *argv[]){
         string *title = nullptr;
         string *description = nullptr;
         string *date = nullptr;
+        string *priority = nullptr;
         bool help = true;
         
         //On cherche --title qui doit exister apres create et avant le derneir element (qui si il existe, est le nom du titre)
@@ -28,6 +29,10 @@ int main(int argc, char *argv[]){
             }
             else if (((string)argv[i]) == "--date"){
                 date = new string(argv[i+1]);
+                i++;
+            }
+            else if (((string)argv[i]) == "--priority"){
+                priority = new string(argv[i+1]);
                 i++;
             }
         }
@@ -48,6 +53,10 @@ int main(int argc, char *argv[]){
             //La Date
             if (date != nullptr){
                 t->SetStartingDate(*date);
+            }
+            //La priorité
+            if (priority != nullptr){
+                t->SetPriority(*priority);
             }
 
 
