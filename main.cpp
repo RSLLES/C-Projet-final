@@ -15,6 +15,7 @@ int main(int argc, char *argv[]){
         string *date = nullptr;
         string *priority = nullptr;
         string *status = nullptr;
+        int *pourcentage = nullptr;
         bool help = true;
         
         //On cherche --title qui doit exister apres create et avant le derneir element (qui si il existe, est le nom du titre)
@@ -38,6 +39,10 @@ int main(int argc, char *argv[]){
             }
             else if (((string)argv[i]) == "--status"){
                 status = new string(argv[i+1]);
+                i++;
+            }
+            else if (((string)argv[i]) == "--pourcentage"){
+                pourcentage = new int(stoi(argv[i+1]));
                 i++;
             }
         }
@@ -67,6 +72,10 @@ int main(int argc, char *argv[]){
             if (status != nullptr){
                 t->SetStatus(*status);
             }
+            //Le pourcentage
+            if (pourcentage != nullptr){
+                t->SetPourcentage(*pourcentage);
+            }
 
             //On enregistre
             T.SaveToFile("Data.txt");
@@ -89,7 +98,6 @@ int main(int argc, char *argv[]){
         delete priority;
         delete status;
 
-
         //Enfin, on affiche l'aide si necessaire
         if (help){
             cout << "'create' permet de creer une nouvelle tache et de l'ajouter a la liste." << endl;
@@ -97,12 +105,12 @@ int main(int argc, char *argv[]){
             cout << "   --title <titre> : permet de specifier le titre de la tache." << endl;
             cout << "Parametres optionnelles : " << endl;
             cout << "   --description <description> : donne une description du travail de la tache." << endl;
-            cout << "   --date <day>/<month>/<year> : Définie une année sous le format suivant. Par defaut, la date est celle d'aujourd'hui." << endl;
-            cout << "   --priority <priorite> : Donne une priorite a la tache. Les seules priorite autorisee sont 'High', 'Normal' et 'Low'. Tout autre entree donnera comme priorite 'ERREUR'." << endl;
-            cout << "   --status <status> : Définie le status de la tache. Les status autorisés sont 'Open', 'Close' et 'Progress'." << endl;
+            cout << "   --date <day>/<month>/<year> : Definie une année sous le format suivant. Par defaut, la date est celle d'aujourd'hui." << endl;
+            cout << "   --priority <priorite> : Donne une priorite a la tache. Les seules priorites autorisees sont 'High', 'Normal' et 'Low'. Tout autre entree donnera comme priorite 'ERREUR'." << endl;
+            cout << "   --status <status> : Definie le status de la tache. Les status autorises sont 'Open', 'Close' et 'Progress'. Tout autre entree donnera comme priorite 'ERREUR'." << endl;
+            cout << "   --pourcentage <ENTIER ENTRE 0 et 100> : Définie le taux d'avancement de la tâche. "
         }
     }
-
 
     //?) Sans mot clefs : explications
     else{
