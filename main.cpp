@@ -86,9 +86,9 @@ int main(int argc, char *argv[]){
             cout << "   --title <titre> : permet de specifier le titre de la tache." << endl;
             cout << "Parametres optionnelles : " << endl;
             cout << "   --description <description> : donne une description du travail de la tache." << endl;
-            cout << "   --priority <priorité> : Donne une priorite a la tache. Les seules priorite autorisee sont 'High', 'Normal' et 'Low'. Tout autre entree donnera comme priorite 'ERREUR'." << endl;
+            cout << "   --date <day>/<month>/<year> : Définie une année sous le format suivant. Par defaut, la date est celle d'aujourd'hui." << endl;
+            cout << "   --priority <priorite> : Donne une priorite a la tache. Les seules priorite autorisee sont 'High', 'Normal' et 'Low'. Tout autre entree donnera comme priorite 'ERREUR'." << endl;
         }
-
     }
 
 
