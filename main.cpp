@@ -8,7 +8,7 @@ int main(int argc, char *argv[]){
     //Le premier arguments est forcement un des mots clefs d'actions
     
     //1) Mot clee create -> Creation d'une tâche
-    if (((string)argv[1]) == "create"){
+    if (argc > 1 && ((string)argv[1]) == "create"){
         //ARGUMENTS OBLIGATOIRES A CHERCHER
         string *title = nullptr;
         string *description = nullptr;
