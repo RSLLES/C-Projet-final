@@ -99,6 +99,7 @@ void Task::SetStartingDate(string line) {
     starting_date = new Date(stoi(s[0]),stoi(s[1]),stoi(s[2]));
 }
 void Task::SetPriority(string line){priority.Set(line);}
+void Task::SetStatus(string line){status.Set(line);}
 
 //##########################
 //TasksManager
