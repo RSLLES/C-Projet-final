@@ -49,6 +49,7 @@ class Task{
    void SetDescription(string); //Permet de modifier la description
    void SetStartingDate(int _day, int _month, int _year); //Modifie la date de début
    void SetStartingDate(string line); //Modifie la date de début a partir d'une chaien de caractère de la forme day/month/year
+   void SetPriority(string line); //Modifie la priorité
 };
 
 
