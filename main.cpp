@@ -14,6 +14,7 @@ int main(int argc, char *argv[]){
         string *description = nullptr;
         string *date = nullptr;
         string *priority = nullptr;
+        string *status = nullptr;
         bool help = true;
         
         //On cherche --title qui doit exister apres create et avant le derneir element (qui si il existe, est le nom du titre)
@@ -33,6 +34,10 @@ int main(int argc, char *argv[]){
             }
             else if (((string)argv[i]) == "--priority"){
                 priority = new string(argv[i+1]);
+                i++;
+            }
+            else if (((string)argv[i]) == "--status"){
+                status = new string(argv[i+1]);
                 i++;
             }
         }
@@ -58,7 +63,10 @@ int main(int argc, char *argv[]){
             if (priority != nullptr){
                 t->SetPriority(*priority);
             }
-
+            //Le status
+            if (status != nullptr){
+                t->SetStatus(*status);
+            }
 
             //On enregistre
             T.SaveToFile("Data.txt");
@@ -77,6 +85,9 @@ int main(int argc, char *argv[]){
         //On detruit les pointeurs utilisés
         delete title;
         delete description;
+        delete date;
+        delete priority;
+        delete status;
 
 
         //Enfin, on affiche l'aide si necessaire
@@ -88,6 +99,7 @@ int main(int argc, char *argv[]){
             cout << "   --description <description> : donne une description du travail de la tache." << endl;
             cout << "   --date <day>/<month>/<year> : Définie une année sous le format suivant. Par defaut, la date est celle d'aujourd'hui." << endl;
             cout << "   --priority <priorite> : Donne une priorite a la tache. Les seules priorite autorisee sont 'High', 'Normal' et 'Low'. Tout autre entree donnera comme priorite 'ERREUR'." << endl;
+            cout << "   --status <status> : Définie le status de la tache. Les status autorisés sont 'Open', 'Close' et 'Progress'." << endl;
         }
     }
 
