@@ -100,6 +100,14 @@ void Task::SetStartingDate(string line) {
 }
 void Task::SetPriority(string line){priority.Set(line);}
 void Task::SetStatus(string line){status.Set(line);}
+void Task::SetPourcentage(int _pourcentage){
+    if (pourcentage >= 0 && pourcentage <= 100){
+        pourcentage = _pourcentage;
+    }
+    else{
+        cout << "ERREUR : Impossible de mettre " << pourcentage << " comme pourcentage : celui ci doit être compris entre 0 et 100 inclus." << endl;
+    }
+}
 
 //##########################
 //TasksManager
