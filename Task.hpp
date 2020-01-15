@@ -45,6 +45,12 @@ class Task{
    string StringToExport(); //Retourne une chaine de caractère transcrivant les attributs de la tache, afin de l'exporter dans un fichier
    
    int GetID(); //Retourne ID
+   string GetTitle();
+   string GetDescription();
+   string GetStartingDate();
+   string GetEndingDate();
+   string GetPriority();
+   string GetStatus();
 
    void SetDescription(string); //Permet de modifier la description
    void SetStartingDate(int _day, int _month, int _year); //Modifie la date de début
@@ -88,11 +94,21 @@ class TasksManager{
     TasksManager();
     TasksManager(string filePath);
     TasksManager(vector<Task*> _liste);
+    ~TasksManager();
 
     void Add(Task* task);
 
     int GetNewID();
     bool SaveToFile(string filePath);
+
+    void KeepOnly(string);
+    void KeepOnlyID(int);
+    void KeepOnlyTitle(string);
+    void KeepOnlyDescription(string);
+    void KeepOnlyStartingDate(string);
+    void KeepOnlyPriority(string);
+    void KeepOnlyStatus(string);
+    void Print();
 };
 
 #endif

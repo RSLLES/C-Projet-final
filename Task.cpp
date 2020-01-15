@@ -5,7 +5,6 @@
 #include <fstream>
 #include <vector>
 #include <sstream>
-#include <fstream>
 using namespace std;
 
 //###########################
@@ -86,6 +85,13 @@ string Task::StringToExport(){
 }
 
 int Task::GetID(){return id;}
+string Task::GetTitle(){return title;}
+string Task::GetDescription(){return description;}
+string Task::GetStartingDate(){return (to_string(starting_date->GetDay()) + "/" 
+                                        + to_string(starting_date->GetMonth()) + "/" 
+                                        + to_string(starting_date->GetYear()));}
+string Task::GetPriority(){return priority.Get();}
+string Task::GetStatus(){return status.Get();}
 
 void Task::SetDescription(string _description){description = _description;}
 void Task::SetStartingDate(int _day, int _month, int _year) {delete starting_date; starting_date = new Date(_day, _month, _year);}
@@ -108,6 +114,8 @@ void Task::SetPourcentage(int _pourcentage){
         cout << "ERREUR : Impossible de mettre " << pourcentage << " comme pourcentage : celui ci doit être compris entre 0 et 100 inclus." << endl;
     }
 }
+
+
 
 //##########################
 //TasksManager
@@ -132,6 +140,11 @@ TasksManager::TasksManager(string filePath): liste() {
         cout << "Impossible d'ouvrir " << filePath << " dans le constructeur de TasksManager";
     }
     
+}
+TasksManager::~TasksManager(){
+        for (vector<Task*>::iterator it(liste.begin()); it != liste.end(); it++){
+        delete (*it);
+    }
 }
 
 
@@ -165,4 +178,81 @@ int TasksManager::GetNewID() {
         }
     }
     return max+1;
+}
+
+
+void TasksManager::KeepOnlyID(int _id){
+    for (vector<Task*>::iterator it(liste.begin()); it != liste.end(); it++){
+        if ((*it)->GetID() != _id){ //Si jamais la tache considérée ne respecte pas le critère
+            Task* t = (*it); //On note le pointeur
+            liste.erase(it); //On l'enleve de la liste
+            delete t; //On le retire de la mémoire
+            it--; //Car on ne veut pas sauter un élément
+        }
+    }
+}
+
+void TasksManager::KeepOnlyTitle(string _title){
+    cout << "DANS LA PLACE BB" << endl;
+    for (vector<Task*>::iterator it(liste.begin()); it != liste.end(); it++){
+        if ((*it)->GetTitle().find(_title) == string::npos){ //Si jamais la tache considérée ne respecte pas le critère
+            Task* t = (*it); //On note le pointeur
+            liste.erase(it); //On l'enleve de la liste
+            delete t; //On le retire de la mémoire
+            it--; //Et on revient en arrière pour pas sauter un élément
+        }
+    }
+}
+
+void TasksManager::KeepOnlyDescription(string _description){
+    for (vector<Task*>::iterator it(liste.begin()); it != liste.end(); it++){
+        if ((*it)->GetDescription().find(_description) == string::npos){ //Si jamais la tache considérée ne respecte pas le critère
+            Task* t = (*it); //On note le pointeur
+            liste.erase(it); //On l'enleve de la liste
+            delete t; //On le retire de la mémoire
+            it--; //Et on revient en arrière pour pas sauter un élément
+        }
+    }
+}
+
+void TasksManager::KeepOnlyStartingDate(string _date){
+    for (vector<Task*>::iterator it(liste.begin()); it != liste.end(); it++){
+        if ((*it)->GetStartingDate().find(_date) == string::npos){ //Si jamais la tache considérée ne respecte pas le critère
+            Task* t = (*it); //On note le pointeur
+            liste.erase(it); //On l'enleve de la liste
+            delete t; //On le retire de la mémoire
+            it--; //Et on revient en arrière pour pas sauter un élément
+        }
+    }
+}
+
+void TasksManager::KeepOnlyPriority(string _prio){
+    for (vector<Task*>::iterator it(liste.begin()); it != liste.end(); it++){
+        if ((*it)->GetPriority().find(_prio) == string::npos){ //Si jamais la tache considérée ne respecte pas le critère
+            Task* t = (*it); //On note le pointeur
+            liste.erase(it); //On l'enleve de la liste
+            delete t; //On le retire de la mémoire
+            it--; //Et on revient en arrière pour pas sauter un élément
+        }
+    }
+}
+
+void TasksManager::KeepOnlyStatus(string _status){
+    //On itère pour tous les éléments de la liste
+    for (vector<Task*>::iterator it(liste.begin()); it != liste.end(); it++){
+        if ((*it)->GetStatus().find(_status) == string::npos){ //Si jamais la tache considérée ne respecte pas le critère
+            Task* t = (*it); //On note le pointeur
+            liste.erase(it); //On l'enleve de la liste
+            delete t; //On le retire de la mémoire
+            it--; //Et on revient en arrière pour pas sauter un élément
+        }
+    }
+}
+
+
+
+void TasksManager::Print(){
+    for (vector<Task*>::iterator it(liste.begin()); it != liste.end(); it++){
+        (*it)->Print(); cout << endl << endl;
+    }
 }
