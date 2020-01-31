@@ -97,6 +97,7 @@ class TasksManager{
     ~TasksManager();
 
     void Add(Task* task);
+    bool Delete(int _id);
 
     int GetNewID();
     bool SaveToFile(string filePath);

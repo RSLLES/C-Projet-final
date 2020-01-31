@@ -169,6 +169,18 @@ void TasksManager::Add(Task* task)
     liste.push_back(task);
 }
 
+bool TasksManager::Delete(int _id){
+    for (vector<Task*>::iterator it(liste.begin()); it != liste.end(); it++){
+        if ((*it)->GetID() == _id){
+            Task* t = (*it); //On note le pointeur
+            liste.erase(it); //On l'enleve de la liste
+            delete t; //On le retire de la mémoire
+            return true; //Car l'élément est unique
+        }
+    }
+    return false;
+}
+
 int TasksManager::GetNewID() {
     //On trouve simplement le plus grand ID, et l'on renvoie l'entier naturel suivant
     int max = 0;
