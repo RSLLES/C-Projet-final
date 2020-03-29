@@ -183,23 +183,24 @@ int main(int argc, char *argv[]){
     //3 ) Mot clee delete -> Supprime une tache
     else if (argc > 1 && ((string)argv[1]) == "delete"){
         //ARGUMENT OBLIGATOIRE et d'ailleurs le seul rechercher
-        int *id = nullptr;
+        int id = -1;
         bool help = true;
 
         for (int i = 2; i < argc-1; i++){
             if (((string)argv[i]) == "--id"){
-                *id = (stoi(argv[i+1]));
+                id = stoi(argv[i+1]);
                 break;
             }
         }
 
         //Si l'on a trouvé l'ID, on va supprimer la tache correspondante
-        if (id != nullptr){
+        if (id != -1){
             //On charge le TaskManager
             TasksManager T("Data.txt");
-            if(T.Delete(*id)){
+            if(T.Delete(id)){
                 cout << "Tache supprimee." << endl;
                 help = false;
+                T.SaveToFile("Data.txt");
             }
             else
             {
@@ -214,7 +215,7 @@ int main(int argc, char *argv[]){
         if(help){
             cout << "'delete' permet de supprimer une tache de la liste." << endl;
             cout << " --id <ID> : Seul argument OBLIGATOIRE pour identifier de maniere unique la tache a supprimer." << endl;
-            cout << "Il peut être utile de reperer l'ID de la tache avec le mot clef 'liste'." << endl;
+            cout << "Il peut etre utile de reperer l'ID de la tache avec le mot clef 'liste'." << endl;
         }
         
     }
