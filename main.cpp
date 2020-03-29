@@ -201,14 +201,22 @@ int main(int argc, char *argv[]){
         if (T->Count() > 0)
         {
             T->Print();
-            cout << "ATTENTION : l'operation delete* va supprimer les " << T->Count() << " tache(s) affichee(s) ci dessus.";;
+            cout << "ATTENTION : l'operation delete* va supprimer les " << T->Count() << " tache(s) affichee(s) ci dessus." << endl;
             cout << "Confirmer ? ('o' pour oui) : ";
             string reponse;
             cin >> reponse;
+            cout << endl;
+
             if (reponse == "o")
             {
-                
+                //Suppression
+                cout << T->Count() << " tache(s) supprimees." << endl;
             }
+            else
+            {
+                cout << "Annule." << endl;
+            }
+            
         }
         else
         {
