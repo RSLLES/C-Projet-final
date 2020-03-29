@@ -148,7 +148,7 @@ int main(int argc, char *argv[]){
         }
     }
 
-    //3 ) Mot clee delete -> Supprime une tache
+    //3 ) Mot clee deleteOne -> Supprime une tache
     else if (argc > 1 && ((string)argv[1]) == "deleteOne"){
         //ARGUMENT OBLIGATOIRE et d'ailleurs le seul rechercher
         int id = -1;
@@ -181,9 +181,9 @@ int main(int argc, char *argv[]){
         }
 
         if(help){
-            cout << "'delete' permet de supprimer une tache de la liste." << endl;
+            cout << "'deleteOne' permet de supprimer une tache de la liste." << endl;
             cout << " --id <ID> : Seul argument OBLIGATOIRE pour identifier de maniere unique la tache a supprimer." << endl;
-            cout << "Il peut etre utile de reperer l'ID de la tache avec le mot clef 'liste'." << endl;
+            cout << "Il peut etre utile de reperer l'ID de la tache avec le mot clef 'list'." << endl;
         }
         
     }
@@ -202,7 +202,7 @@ int main(int argc, char *argv[]){
         if (TASuppr->Count() > 0)
         {
             TASuppr->Print();
-            cout << "ATTENTION : l'operation delete* va supprimer les " << TASuppr->Count() << " tache(s) affichee(s) ci dessus." << endl;
+            cout << "ATTENTION : l'operation delete va supprimer les " << TASuppr->Count() << " tache(s) affichee(s) ci dessus." << endl;
             cout << "Confirmer ? ('o' pour oui) : ";
             string reponse;
             cin >> reponse;
@@ -232,10 +232,16 @@ int main(int argc, char *argv[]){
         }
         
 
-        if(true){
-            cout << "'delete' permet de supprimer une tache de la liste." << endl;
-            cout << " --id <ID> : Seul argument OBLIGATOIRE pour identifier de maniere unique la tache a supprimer." << endl;
-            cout << "Il peut etre utile de reperer l'ID de la tache avec le mot clef 'liste'." << endl;
+        if(help){
+            cout << "'deleteAll' permet de supprimer toutes les taches repondant a des criteres precis." << endl;
+            cout << "Parametres de recherches : " << endl;
+            cout << "   --id <ID> : Affiche la tache avec l'ID ci contre." << endl;
+            cout << "   --title <titre> : Affiche les taches contenant <titre> dans leur titre (sensible à la casse). " << endl;
+            cout << "   --description <description> : Affiche les taches contenant <description> dans leur description (sensible à la casse)." << endl;
+            cout << "   --date <day>/<month>/<year> : Affiche les taches creee a la date indiquee." << endl;
+            cout << "   --priority <priorite> : Affiche les tache de la priorite indiquee." << endl;
+            cout << "   --status <status> : Affiche les tâche du status indique." << endl;
+            cout << "ATTENTION : Sans criteres, delete supprimera toutes les taches existantes" << endl;
         }
         
     }
@@ -246,8 +252,8 @@ int main(int argc, char *argv[]){
         cout << "Fonctionnalites : " << endl;
         cout << "   create : Permet de creer une nouvelle tache." << endl;
         cout << "   list : Permet de lister les taches repondant à certains criteres." << endl;
-        cout << "   delete : Permet de supprimer une UNIQUE tache de la liste." << endl;
-        cout << "   delete* : Permet de supprimer TOUTES les taches repondant aux criteres specifies." << endl;
+        cout << "   deleteOne : Permet de supprimer une UNIQUE tache de la liste." << endl;
+        cout << "   delete : Permet de supprimer TOUTES les taches repondant aux criteres specifies." << endl;
         cout << "Pour plus de precision sur chaque commande, utiliser '<commande> --help'" << endl;
     }
     return 0;
