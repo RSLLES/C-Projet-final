@@ -149,7 +149,7 @@ int main(int argc, char *argv[]){
     }
 
     //3 ) Mot clee delete -> Supprime une tache
-    else if (argc > 1 && ((string)argv[1]) == "delete"){
+    else if (argc > 1 && ((string)argv[1]) == "deleteOne"){
         //ARGUMENT OBLIGATOIRE et d'ailleurs le seul rechercher
         int id = -1;
         bool help = true;
@@ -189,19 +189,20 @@ int main(int argc, char *argv[]){
     }
 
 
-    //3 ) Mot cle delete* -> Supprime toutes les taches qui répondent aux critères imposés
+    //3 ) Mot cle delete -> Supprime toutes les taches qui répondent aux critères imposés
     else if (argc > 1 && ((string)argv[1]) == "delete"){
         //On utilise ce qui a été coinstruit pour le mot cle list pour extraire ce qui correspond au critères indiqués
         bool help = false;
 
         //On charge le TaskManager
-        TasksManager* T = new TasksManager("Data.txt");
-        Extraire(argc, argv, T);
+        TasksManager* TASuppr = new TasksManager("Data.txt");
+        TasksManager T = TasksManager("Data.txt");
+        Extraire(argc, argv, TASuppr);
 
-        if (T->Count() > 0)
+        if (TASuppr->Count() > 0)
         {
-            T->Print();
-            cout << "ATTENTION : l'operation delete* va supprimer les " << T->Count() << " tache(s) affichee(s) ci dessus." << endl;
+            TASuppr->Print();
+            cout << "ATTENTION : l'operation delete* va supprimer les " << TASuppr->Count() << " tache(s) affichee(s) ci dessus." << endl;
             cout << "Confirmer ? ('o' pour oui) : ";
             string reponse;
             cin >> reponse;
@@ -210,7 +211,14 @@ int main(int argc, char *argv[]){
             if (reponse == "o")
             {
                 //Suppression
-                cout << T->Count() << " tache(s) supprimees." << endl;
+                //On extrait l'ID de chacune des taches présente dans dans TASuppr et on les enlevent de T
+                vector<int>* ids = TASuppr->GetAllIDs();
+                for (vector<int>::iterator it(ids->begin()); it != ids->end(); it++)
+                    T.Delete((*it));
+
+                T.SaveToFile("Data.txt");
+
+                cout << TASuppr->Count() << " tache(s) supprimee(s)." << endl;
             }
             else
             {
@@ -220,7 +228,7 @@ int main(int argc, char *argv[]){
         }
         else
         {
-            cout << "Erreur : Aucune entree ne satisfait au criteres donnes. Operation annulee. "
+            cout << "Erreur : Aucune entree ne satisfait au criteres donnes. Operation annulee. " << endl;
         }
         
 
