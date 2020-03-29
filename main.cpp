@@ -129,7 +129,10 @@ int main(int argc, char *argv[]){
         //On affiche le résultat si l'aide n'est pas demandée
         if (!help)
         {
-            cout << T->Count() << " tache(s) correspondant au(x) critere(s) demmande(s) trouvee(s)." << endl;
+            if (T->Count() == 0)
+                cout << "Aucune tache ne satisfait tous les criteres de la recherche." << endl;
+            else
+                cout << T->Count() << " tache(s) correspondant au(x) critere(s) demmande(s) trouvee(s)." << endl;
             T->Print();
         }
             
@@ -160,13 +163,13 @@ int main(int argc, char *argv[]){
 
         if (TASuppr->Count() > 0)
         {
-            //On affiche un avertissement si il y a plus d'un tache
+            //On affiche un avertissement si il y a plus d'un tache, qui est vrai par defaut
+            string reponse("o");
             if (TASuppr->Count() > 1)
             {
                 TASuppr->Print();
-                cout << "ATTENTION : l'operation delete va supprimer les " << TASuppr->Count() << " tache(s) affichee(s) ci dessus." << endl;
+                cout << "ATTENTION : l'operation delete va supprimer les " << TASuppr->Count() << " taches affichees ci dessus." << endl;
                 cout << "Confirmer ? ('o' pour oui) : ";
-                string reponse;
                 cin >> reponse;
                 cout << endl;
             }
