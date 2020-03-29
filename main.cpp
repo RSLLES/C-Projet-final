@@ -120,51 +120,13 @@ int main(int argc, char *argv[]){
         cout << argc << endl;
 
         //On charge le TaskManager
-        TasksManager T("Data.txt");
+        TasksManager* T = new TasksManager("Data.txt");
         //On va également créer un pointeur vide temporaire qui va nous permettre de
         //stocker le nouveau TaskManager retourné par les méthodes Search
-
-        //On cherche à présent si des critères sont spécifiés, et si c'est le cas on supprime ceux n'y répondant pas.
-        for (int i = 2; i < argc; i++){
-            if (((string)argv[i]) == "--id"){
-                int const id(stoi(argv[i+1])); //Je pose une variable ici pour plus de clarté, mais ce n'est pas nécessaire
-                T.KeepOnlyID(id);
-                i++;
-            }
-            else if (((string)argv[i]) == "--title"){
-                string const title(argv[i+1]);
-                T.KeepOnlyTitle(title);
-                i++; 
-            }
-            else if (((string)argv[i]) == "--description"){
-                string const description(argv[i+1]);
-                T.KeepOnlyDescription(description);
-                i++;
-            }
-            else if (((string)argv[i]) == "--date"){
-                string const date(argv[i+1]);
-                T.KeepOnlyStartingDate(date);
-                i++;
-            }
-            else if (((string)argv[i]) == "--priority"){
-                string const priority (argv[i+1]);
-                T.KeepOnlyPriority(priority);
-                i++;
-            }
-            else if (((string)argv[i]) == "--status"){
-                string const status(argv[i+1]);
-                T.KeepOnlyStatus(status);
-                i++;
-            }
-            else if (((string)argv[i]) == "--help"){
-                help = true;
-            }
-        }
-
-
+        Extraire(argc, argv, T);
         //On affiche le résultat si l'aide n'est pas demandée
         if (!help)
-            T.Print();
+            T->Print();
 
         //Enfin, on affiche l'aide si necessaire
         else{
@@ -220,14 +182,70 @@ int main(int argc, char *argv[]){
         
     }
 
+
+    //3 ) Mot cle delete* -> Supprime toutes les taches qui répondent aux critères imposés
+    else if (argc > 1 && ((string)argv[1]) == "delete"){
+        //On utilise ce qui a été coinstruit pour le mot cle list pour extraire ce qui correspond au critères indiqués
+
+        if(true){
+            cout << "'delete' permet de supprimer une tache de la liste." << endl;
+            cout << " --id <ID> : Seul argument OBLIGATOIRE pour identifier de maniere unique la tache a supprimer." << endl;
+            cout << "Il peut etre utile de reperer l'ID de la tache avec le mot clef 'liste'." << endl;
+        }
+        
+    }
+
     //?) Sans mot clefs : explications
     else{
         cout << "Logiciel de 'todo-list' permettant de gerer un ensmemble de taches." << endl;
         cout << "Fonctionnalites : " << endl;
         cout << "   create : Permet de creer une nouvelle tache." << endl;
         cout << "   list : Permet de lister les taches repondant à certains criteres." << endl;
-        cout << "   delete : Permet de supprimer une tache de la liste." << endl;
+        cout << "   delete : Permet de supprimer une UNIQUE tache de la liste." << endl;
+        cout << "   delete* : Permet de supprimer TOUTES les taches repondant aux criteres specifies." << endl;
         cout << "Pour plus de precision sur chaque commande, utiliser '<commande> --help'" << endl;
     }
     return 0;
+}
+
+
+void Extraire(int argc, char* argv[], TasksManager* T )
+/*
+Méthode qui extrait d'un TaskManager les critères demandés.
+C'est le coeur de la méthode list
+*/
+{
+            //On cherche à présent si des critères sont spécifiés, et si c'est le cas on supprime ceux n'y répondant pas.
+        for (int i = 2; i < argc; i++){
+            if (((string)argv[i]) == "--id"){
+                int const id(stoi(argv[i+1])); //Je pose une variable ici pour plus de clarté, mais ce n'est pas nécessaire
+                T->KeepOnlyID(id);
+                i++;
+            }
+            else if (((string)argv[i]) == "--title"){
+                string const title(argv[i+1]);
+                T->KeepOnlyTitle(title);
+                i++; 
+            }
+            else if (((string)argv[i]) == "--description"){
+                string const description(argv[i+1]);
+                T->KeepOnlyDescription(description);
+                i++;
+            }
+            else if (((string)argv[i]) == "--date"){
+                string const date(argv[i+1]);
+                T->KeepOnlyStartingDate(date);
+                i++;
+            }
+            else if (((string)argv[i]) == "--priority"){
+                string const priority (argv[i+1]);
+                T->KeepOnlyPriority(priority);
+                i++;
+            }
+            else if (((string)argv[i]) == "--status"){
+                string const status(argv[i+1]);
+                T->KeepOnlyStatus(status);
+                i++;
+            }
+        }
 }
