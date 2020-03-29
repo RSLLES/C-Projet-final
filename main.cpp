@@ -19,7 +19,7 @@ int main(int argc, char *argv[]){
         int *pourcentage = nullptr;
         bool help = true;
         
-        //On cherche --title qui doit exister apres create et avant le derneir element (qui si il existe, est le nom du titre)
+        //On cherche --title qui doit exister apres create et avant le dernier element (qui si il existe, est le nom du titre)
         //On cherche egalement la mention d'aide
         for (int i = 2; i < argc; i++){
             if (((string)argv[i]) == "--title"){
@@ -192,6 +192,29 @@ int main(int argc, char *argv[]){
     //3 ) Mot cle delete* -> Supprime toutes les taches qui répondent aux critères imposés
     else if (argc > 1 && ((string)argv[1]) == "delete"){
         //On utilise ce qui a été coinstruit pour le mot cle list pour extraire ce qui correspond au critères indiqués
+        bool help = false;
+
+        //On charge le TaskManager
+        TasksManager* T = new TasksManager("Data.txt");
+        Extraire(argc, argv, T);
+
+        if (T->Count() > 0)
+        {
+            T->Print();
+            cout << "ATTENTION : l'operation delete* va supprimer les " << T->Count() << " tache(s) affichee(s) ci dessus.";;
+            cout << "Confirmer ? ('o' pour oui) : ";
+            string reponse;
+            cin >> reponse;
+            if (reponse == "o")
+            {
+                
+            }
+        }
+        else
+        {
+            cout << "Erreur : Aucune entree ne satisfait au criteres donnes. Operation annulee. "
+        }
+        
 
         if(true){
             cout << "'delete' permet de supprimer une tache de la liste." << endl;
