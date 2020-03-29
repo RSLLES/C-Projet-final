@@ -195,6 +195,15 @@ int TasksManager::GetNewID() {
     return max+1;
 }
 
+vector<int> TasksManager::GetAllIDs()
+//Retourne un tableau contenant les IDs de toutes les taches existante
+{
+    vector<int> ids;
+    for (vector<Task*>::iterator it(liste.begin()); it != liste.end(); it++)
+        ids.push_back((*it)->GetID());
+    return ids;
+}
+
 
 void TasksManager::KeepOnlyID(int _id){
     for (vector<Task*>::iterator it(liste.begin()); it != liste.end(); it++){
