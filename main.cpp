@@ -7,45 +7,6 @@ int main(int argc, char *argv[]){
     //Traitement de la ligne de commande
     //Le premier arguments est forcement un des mots clefs d'actions
 
-    // ) Mot clee delete -> Supprime une tache
-    if (argc > 1 && ((string)argv[1]) == "delete"){
-        //ARGUMENT OBLIGATOIRE et d'ailleurs le seul rechercher
-        int *id = nullptr;
-        bool help = true;
-
-        for (int i = 2; i < argc-1; i++){
-            if (((string)argv[i]) == "--id"){
-                *id = (stoi(argv[i+1]));
-                break;
-            }
-        }
-
-        //Si l'on a trouvé l'ID, on va supprimer la tache correspondante
-        if (id != nullptr){
-            //On charge le TaskManager
-            TasksManager T("Data.txt");
-            if(T.Delete(*id)){
-                cout << "Tache supprimee." << endl;
-                help = false;
-            }
-            else
-            {
-                cout << "Aucune tache avec cet ID n'a pu etre trouvee." << endl;
-            }
-        }
-        else
-        {
-            cout << "--id est obligatoire pour trouver la tache a supprimer." << endl;
-        }
-
-        if(help){
-            cout << "'delete' permet de supprimer une tache de la liste." << endl;
-            cout << " --id <ID> : Seul argument OBLIGATOIRE pour identifier de maniere unique la tache a supprimer." << endl;
-            cout << "Il peut être utile de reperer l'ID de la tache avec le mot clef 'liste'." << endl;
-        }
-        
-    }
-
     //1) Mot clee create -> Creation d'une tâche
     if (argc > 1 && ((string)argv[1]) == "create"){
         //ARGUMENTS A CHERCHER
@@ -59,7 +20,7 @@ int main(int argc, char *argv[]){
         
         //On cherche --title qui doit exister apres create et avant le derneir element (qui si il existe, est le nom du titre)
         //On cherche egalement la mention d'aide
-        for (int i = 2; i < argc-1; i++){
+        for (int i = 2; i < argc; i++){
             if (((string)argv[i]) == "--title"){
                 title = new string(argv[i+1]);
                 i++; //Ca ne sert à rien de retraiter le caractere precedent
@@ -156,6 +117,7 @@ int main(int argc, char *argv[]){
     else if (argc > 1 && ((string)argv[1]) == "list"){
         //par défaut --liste affiche naturellement quelque chose, on désactive donc l'aide
         bool help = false;
+        cout << argc << endl;
 
         //On charge le TaskManager
         TasksManager T("Data.txt");
@@ -163,7 +125,7 @@ int main(int argc, char *argv[]){
         //stocker le nouveau TaskManager retourné par les méthodes Search
 
         //On cherche à présent si des critères sont spécifiés, et si c'est le cas on supprime ceux n'y répondant pas.
-        for (int i = 2; i < argc-1; i++){
+        for (int i = 2; i < argc; i++){
             if (((string)argv[i]) == "--id"){
                 int const id(stoi(argv[i+1])); //Je pose une variable ici pour plus de clarté, mais ce n'est pas nécessaire
                 T.KeepOnlyID(id);
@@ -200,11 +162,12 @@ int main(int argc, char *argv[]){
         }
 
 
-        //On affiche le résultat
-        T.Print();
+        //On affiche le résultat si l'aide n'est pas demandée
+        if (!help)
+            T.Print();
 
         //Enfin, on affiche l'aide si necessaire
-        if (help){
+        else{
             cout << "'liste' permet de lister les différentes taches enregistres." << endl;
             cout << "Il est aussi possible de specifier certains criteres afin de reduire la liste." << endl;
             cout << "Parametres optionnelles : " << endl;
@@ -217,12 +180,52 @@ int main(int argc, char *argv[]){
         }
     }
 
+    //3 ) Mot clee delete -> Supprime une tache
+    else if (argc > 1 && ((string)argv[1]) == "delete"){
+        //ARGUMENT OBLIGATOIRE et d'ailleurs le seul rechercher
+        int *id = nullptr;
+        bool help = true;
+
+        for (int i = 2; i < argc-1; i++){
+            if (((string)argv[i]) == "--id"){
+                *id = (stoi(argv[i+1]));
+                break;
+            }
+        }
+
+        //Si l'on a trouvé l'ID, on va supprimer la tache correspondante
+        if (id != nullptr){
+            //On charge le TaskManager
+            TasksManager T("Data.txt");
+            if(T.Delete(*id)){
+                cout << "Tache supprimee." << endl;
+                help = false;
+            }
+            else
+            {
+                cout << "Aucune tache avec cet ID n'a pu etre trouvee." << endl;
+            }
+        }
+        else
+        {
+            cout << "--id est obligatoire pour trouver la tache a supprimer." << endl;
+        }
+
+        if(help){
+            cout << "'delete' permet de supprimer une tache de la liste." << endl;
+            cout << " --id <ID> : Seul argument OBLIGATOIRE pour identifier de maniere unique la tache a supprimer." << endl;
+            cout << "Il peut être utile de reperer l'ID de la tache avec le mot clef 'liste'." << endl;
+        }
+        
+    }
+
     //?) Sans mot clefs : explications
     else{
         cout << "Logiciel de 'todo-list' permettant de gerer un ensmemble de taches." << endl;
         cout << "Fonctionnalites : " << endl;
         cout << "   create : Permet de creer une nouvelle tache." << endl;
-        cout << "   list : Permet de lister les taches répondant à certains critères." << endl;
+        cout << "   list : Permet de lister les taches repondant à certains criteres." << endl;
+        cout << "   delete : Permet de supprimer une tache de la liste." << endl;
         cout << "Pour plus de precision sur chaque commande, utiliser '<commande> --help'" << endl;
     }
     return 0;
