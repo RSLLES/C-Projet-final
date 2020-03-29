@@ -118,16 +118,21 @@ int main(int argc, char *argv[]){
     else if (argc > 1 && ((string)argv[1]) == "list"){
         //par défaut --liste affiche naturellement quelque chose, on désactive donc l'aide
         bool help = false;
-        cout << argc << endl;
 
         //On charge le TaskManager
         TasksManager* T = new TasksManager("Data.txt");
+
         //On va également créer un pointeur vide temporaire qui va nous permettre de
         //stocker le nouveau TaskManager retourné par les méthodes Search
         Extraire(argc, argv, T);
+
         //On affiche le résultat si l'aide n'est pas demandée
         if (!help)
+        {
+            cout << T->Count() << " tache(s) correspondant au(x) critere(s) demmande(s) trouvee(s)." << endl;
             T->Print();
+        }
+            
 
         //Enfin, on affiche l'aide si necessaire
         else{
