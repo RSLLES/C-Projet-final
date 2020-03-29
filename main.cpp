@@ -148,47 +148,6 @@ int main(int argc, char *argv[]){
         }
     }
 
-    //3 ) Mot clee deleteOne -> Supprime une tache
-    else if (argc > 1 && ((string)argv[1]) == "deleteOne"){
-        //ARGUMENT OBLIGATOIRE et d'ailleurs le seul rechercher
-        int id = -1;
-        bool help = true;
-
-        for (int i = 2; i < argc-1; i++){
-            if (((string)argv[i]) == "--id"){
-                id = stoi(argv[i+1]);
-                break;
-            }
-        }
-
-        //Si l'on a trouvé l'ID, on va supprimer la tache correspondante
-        if (id != -1){
-            //On charge le TaskManager
-            TasksManager T("Data.txt");
-            if(T.Delete(id)){
-                cout << "Tache supprimee." << endl;
-                help = false;
-                T.SaveToFile("Data.txt");
-            }
-            else
-            {
-                cout << "Aucune tache avec cet ID n'a pu etre trouvee." << endl;
-            }
-        }
-        else
-        {
-            cout << "--id est obligatoire pour trouver la tache a supprimer." << endl;
-        }
-
-        if(help){
-            cout << "'deleteOne' permet de supprimer une tache de la liste." << endl;
-            cout << " --id <ID> : Seul argument OBLIGATOIRE pour identifier de maniere unique la tache a supprimer." << endl;
-            cout << "Il peut etre utile de reperer l'ID de la tache avec le mot clef 'list'." << endl;
-        }
-        
-    }
-
-
     //3 ) Mot cle delete -> Supprime toutes les taches qui répondent aux critères imposés
     else if (argc > 1 && ((string)argv[1]) == "delete"){
         //On utilise ce qui a été coinstruit pour le mot cle list pour extraire ce qui correspond au critères indiqués
@@ -201,13 +160,16 @@ int main(int argc, char *argv[]){
 
         if (TASuppr->Count() > 0)
         {
-            TASuppr->Print();
-            cout << "ATTENTION : l'operation delete va supprimer les " << TASuppr->Count() << " tache(s) affichee(s) ci dessus." << endl;
-            cout << "Confirmer ? ('o' pour oui) : ";
-            string reponse;
-            cin >> reponse;
-            cout << endl;
-
+            //On affiche un avertissement si il y a plus d'un tache
+            if (TASuppr->Count() > 1)
+            {
+                TASuppr->Print();
+                cout << "ATTENTION : l'operation delete va supprimer les " << TASuppr->Count() << " tache(s) affichee(s) ci dessus." << endl;
+                cout << "Confirmer ? ('o' pour oui) : ";
+                string reponse;
+                cin >> reponse;
+                cout << endl;
+            }
             if (reponse == "o")
             {
                 //Suppression
@@ -233,7 +195,7 @@ int main(int argc, char *argv[]){
         
 
         if(help){
-            cout << "'deleteAll' permet de supprimer toutes les taches repondant a des criteres precis." << endl;
+            cout << "'delete' permet de supprimer toutes les taches repondant a des criteres precis." << endl;
             cout << "Parametres de recherches : " << endl;
             cout << "   --id <ID> : Affiche la tache avec l'ID ci contre." << endl;
             cout << "   --title <titre> : Affiche les taches contenant <titre> dans leur titre (sensible à la casse). " << endl;
@@ -252,7 +214,6 @@ int main(int argc, char *argv[]){
         cout << "Fonctionnalites : " << endl;
         cout << "   create : Permet de creer une nouvelle tache." << endl;
         cout << "   list : Permet de lister les taches repondant à certains criteres." << endl;
-        cout << "   deleteOne : Permet de supprimer une UNIQUE tache de la liste." << endl;
         cout << "   delete : Permet de supprimer TOUTES les taches repondant aux criteres specifies." << endl;
         cout << "Pour plus de precision sur chaque commande, utiliser '<commande> --help'" << endl;
     }
