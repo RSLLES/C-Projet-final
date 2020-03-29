@@ -147,6 +147,9 @@ TasksManager::~TasksManager(){
     }
 }
 
+//Retourne le nombre de tache dans notre TaskManager
+int TasksManager::Count(){return liste.size();}
+
 
 bool TasksManager::SaveToFile(string filePath){
     //Ouverture du fichier

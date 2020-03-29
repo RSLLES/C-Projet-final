@@ -100,6 +100,7 @@ class TasksManager{
     bool Delete(int _id);
 
     int GetNewID();
+    int Count();
     bool SaveToFile(string filePath);
 
     void KeepOnly(string);
