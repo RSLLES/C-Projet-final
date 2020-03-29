@@ -100,7 +100,7 @@ class TasksManager{
     bool Delete(int _id);
 
     int GetNewID();
-    vector<int> GetAllIDs();
+    vector<int>* GetAllIDs();
     int Count();
     bool SaveToFile(string filePath);
 
