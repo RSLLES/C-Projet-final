@@ -101,6 +101,7 @@ class TasksManager{
 
     int GetNewID();
     vector<int>* GetAllIDs();
+    Task* GetTask(int id);
     int Count();
     bool SaveToFile(string filePath);
 

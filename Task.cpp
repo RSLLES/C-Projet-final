@@ -150,6 +150,16 @@ TasksManager::~TasksManager(){
 //Retourne le nombre de tache dans notre TaskManager
 int TasksManager::Count(){return liste.size();}
 
+//Retourne un pointeur vers la tache avec l'ID specifié
+Task* TasksManager::GetTask(int _id){
+        for (vector<Task*>::iterator it(liste.begin()); it != liste.end(); it++){
+        if ((*it)->GetID() == _id){
+            return (*it); //On note le pointeur
+        }
+    }
+    return nullptr;
+}
+
 
 bool TasksManager::SaveToFile(string filePath){
     //Ouverture du fichier
@@ -217,7 +227,6 @@ void TasksManager::KeepOnlyID(int _id){
 }
 
 void TasksManager::KeepOnlyTitle(string _title){
-    cout << "DANS LA PLACE BB" << endl;
     for (vector<Task*>::iterator it(liste.begin()); it != liste.end(); it++){
         if ((*it)->GetTitle().find(_title) == string::npos){ //Si jamais la tache considérée ne respecte pas le critère
             Task* t = (*it); //On note le pointeur

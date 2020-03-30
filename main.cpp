@@ -6,82 +6,32 @@ using namespace std;
 
 int main(int argc, char *argv[]){
     //Traitement de la ligne de commande
+    string args[N] = {DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT};
+    Args(argc, argv, args);
+
+
     //Le premier arguments est forcement un des mots clefs d'actions
 
     //1) Mot clee create -> Creation d'une tâche
     if (argc > 1 && ((string)argv[1]) == "create"){
-        //ARGUMENTS A CHERCHER
-        string *title = nullptr;
-        string *description = nullptr;
-        string *date = nullptr;
-        string *priority = nullptr;
-        string *status = nullptr;
-        int *pourcentage = nullptr;
-        bool help = true;
-        
-        //On cherche --title qui doit exister apres create et avant le dernier element (qui si il existe, est le nom du titre)
-        //On cherche egalement la mention d'aide
-        for (int i = 2; i < argc; i++){
-            if (((string)argv[i]) == "--title"){
-                title = new string(argv[i+1]);
-                i++; //Ca ne sert à rien de retraiter le caractere precedent
-            }
-            else if (((string)argv[i]) == "--description"){
-                description = new string(argv[i+1]);
-                i++;
-            }
-            else if (((string)argv[i]) == "--date"){
-                date = new string(argv[i+1]);
-                i++;
-            }
-            else if (((string)argv[i]) == "--priority"){
-                priority = new string(argv[i+1]);
-                i++;
-            }
-            else if (((string)argv[i]) == "--status"){
-                status = new string(argv[i+1]);
-                i++;
-            }
-            else if (((string)argv[i]) == "--pourcentage"){
-                pourcentage = new int(stoi(argv[i+1]));
-                i++;
-            }
-        }
+        bool reussi = false;
 
         //Si l'on a trouve un titre, alors on peut creer la tache
-        if (title != nullptr){
+        if (args[_TITLE_] != DEFAULT){
+            cout << args[_TITLE_] << endl;
             //On charge le TaskManager
             TasksManager T("Data.txt");
             //On créer et ajoute notre Tache
-            Task *t = new Task(T.GetNewID(), *title);
+            Task *t = new Task(T.GetNewID(), args[_TITLE_]);
             T.Add(t);
             
-            //On ajoute ensuite les autres arguments si ils sont spécifiés
-            //La Description
-            if (description != nullptr){
-                t->SetDescription(*description);
-            }
-            //La Date
-            if (date != nullptr){
-                t->SetStartingDate(*date);
-            }
-            //La priorité
-            if (priority != nullptr){
-                t->SetPriority(*priority);
-            }
-            //Le status
-            if (status != nullptr){
-                t->SetStatus(*status);
-            }
-            //Le pourcentage
-            if (pourcentage != nullptr){
-                t->SetPourcentage(*pourcentage);
-            }
+            //On ajoute ensuite les autres arguments si ils sont spécifiés à la tache
+            Set(args, t);
 
             //On enregistre
             T.SaveToFile("Data.txt");
-            //On désactive l'aide
-            help = false;
+            //On a reussi
+            reussi = true;
             //On affiche un retour
             t->Print();
             cout << endl << "Tache ajoutee." << endl;
@@ -92,16 +42,8 @@ int main(int argc, char *argv[]){
             cout << "Erreur : le parametre '--title' est indispensable dans la creation d'une liste" << endl;
         }
 
-        //On detruit les pointeurs utilisés
-        delete title;
-        delete description;
-        delete date;
-        delete priority;
-        delete status;
-        delete pourcentage;
-
-        //Enfin, on affiche l'aide si necessaire
-        if (help){
+        //Enfin, on affiche l'aide si necessaire, c'est à dire si demandé ou bien si l'utilisateur a raté qquechose
+        if (args[_HELP_] != DEFAULT || !reussi){
             cout << "'create' permet de creer une nouvelle tache et de l'ajouter a la liste." << endl;
             cout << "Parametres obligatoires : " << endl;
             cout << "   --title <titre> : permet de specifier le titre de la tache." << endl;
@@ -116,18 +58,14 @@ int main(int argc, char *argv[]){
 
     //2) Mot clef list
     else if (argc > 1 && ((string)argv[1]) == "list"){
-        //par défaut --liste affiche naturellement quelque chose, on désactive donc l'aide
-        bool help = false;
-
         //On charge le TaskManager
         TasksManager* T = new TasksManager("Data.txt");
 
-        //On va également créer un pointeur vide temporaire qui va nous permettre de
-        //stocker le nouveau TaskManager retourné par les méthodes Search
-        Extraire(argc, argv, T);
+        //On y retire tout ce qui ne rentre pas dans les criteres
+        Extraire(args, T);
 
         //On affiche le résultat si l'aide n'est pas demandée
-        if (!help)
+        if (args[_HELP_] == DEFAULT)
         {
             if (T->Count() == 0)
                 cout << "Aucune tache ne satisfait tous les criteres de la recherche." << endl;
@@ -135,7 +73,6 @@ int main(int argc, char *argv[]){
                 cout << T->Count() << " tache(s) correspondant au(x) critere(s) demmande(s) trouvee(s)." << endl;
             T->Print();
         }
-            
 
         //Enfin, on affiche l'aide si necessaire
         else{
@@ -151,15 +88,16 @@ int main(int argc, char *argv[]){
         }
     }
 
+
     //3 ) Mot cle delete -> Supprime toutes les taches qui répondent aux critères imposés
     else if (argc > 1 && ((string)argv[1]) == "delete"){
         //On utilise ce qui a été coinstruit pour le mot cle list pour extraire ce qui correspond au critères indiqués
-        bool help = false;
+        bool reussi = false;
 
         //On charge le TaskManager
         TasksManager* TASuppr = new TasksManager("Data.txt");
         TasksManager T = TasksManager("Data.txt");
-        Extraire(argc, argv, TASuppr);
+        Extraire(args, TASuppr);
 
         if (TASuppr->Count() > 0)
         {
@@ -173,6 +111,7 @@ int main(int argc, char *argv[]){
                 cin >> reponse;
                 cout << endl;
             }
+            
             if (reponse == "o")
             {
                 //Suppression
@@ -184,20 +123,22 @@ int main(int argc, char *argv[]){
                 T.SaveToFile("Data.txt");
 
                 cout << TASuppr->Count() << " tache(s) supprimee(s)." << endl;
+                reussi = true;
             }
             else
             {
                 cout << "Annule." << endl;
+                reussi = true;
             }
             
         }
         else
         {
-            cout << "Erreur : Aucune entree ne satisfait au criteres donnes. Operation annulee. " << endl;
+            cout << "Erreur : Aucune entree ne satisfait aux criteres donnes. Operation annulee. " << endl;
         }
         
 
-        if(help){
+        if(args[_HELP_] != DEFAULT || !reussi){
             cout << "'delete' permet de supprimer toutes les taches repondant a des criteres precis." << endl;
             cout << "Parametres de recherches : " << endl;
             cout << "   --id <ID> : Affiche la tache avec l'ID ci contre." << endl;
@@ -206,6 +147,61 @@ int main(int argc, char *argv[]){
             cout << "   --date <day>/<month>/<year> : Affiche les taches creee a la date indiquee." << endl;
             cout << "   --priority <priorite> : Affiche les tache de la priorite indiquee." << endl;
             cout << "   --status <status> : Affiche les tâche du status indique." << endl;
+            cout << "ATTENTION : Sans criteres, delete supprimera toutes les taches existantes" << endl;
+        }
+        
+    }
+
+    //4) Mot clef change
+    else if (argc > 1 && ((string)argv[1]) == "change"){
+        bool reussi = false;
+
+        //On repère la tache que l'on souhaite modifier, en cherchant son id
+        //On vérifie que l'on a bien trouvé l'ID, sinon on ne sait pas quelle tache modifier
+        if (args[_ID_] != DEFAULT)
+        {
+            //On vérifie que l'ID exist
+            TasksManager T = TasksManager("Data.txt");
+            Task* t = T.GetTask(stoi(args[_ID_]));
+            if (t != nullptr)
+            {
+                //On l'affiche
+                cout << "Tache avant modification: " << endl;
+                t->Print();
+                cout << endl << "########" << endl << endl;
+
+                //On modifie à présent ce qu'il faut modifier
+                Set(args, t);
+
+                //On réaffiche
+                cout << "Tache modifiee : " << endl;
+                t->Print();
+
+                //On enregistre
+                T.SaveToFile("Data.txt");
+            }
+            else{
+                cout << "Aucune tache de trouvee pour l'ID [" << args[_ID_] << "]. Merci de verifier avec 'list'." << endl; 
+            }
+
+        }
+        else
+        {
+            cout << "Pour utiliser 'change', l'argument --id est indispensable pour identifier de maniere unique la tache a modifier" << endl;
+        }
+        
+
+        if(args[_HELP_] != DEFAULT){
+            cout << "'change' permet de modifier les caracteristiques d'une tache en particulier." << endl;
+            cout << "Parametre obligatoire : " << endl;
+            cout << "   --id <ID> : Pour identifier de maniere unique la tache a modifier." << endl;
+            cout << "Parametres a modifier : " << endl;
+            cout << "   --title <titre> : Affiche les taches contenant <titre> dans leur titre (sensible à la casse). " << endl;
+            cout << "   --description <description> : Affiche les taches contenant <description> dans leur description (sensible à la casse)." << endl;
+            cout << "   --date <day>/<month>/<year> : Affiche les taches creee a la date indiquee." << endl;
+            cout << "   --priority <priorite> : Affiche les tache de la priorite indiquee." << endl;
+            cout << "   --status <status> : Change le status de la tache." << endl;
+            cout << "   --pourcentage <Nombre 1 a 100> : Changer le pourcentage d'avancement de la tache" << endl;
             cout << "ATTENTION : Sans criteres, delete supprimera toutes les taches existantes" << endl;
         }
         
@@ -223,44 +219,80 @@ int main(int argc, char *argv[]){
     return 0;
 }
 
+void Args(int argc, char* argv[], string* r)
+/*
+Fonction qui regarde tous les arguments possible et stock tout dans un grand tableau de int dans un ordre fixe.
+Les différentes constantes sont définies dans main.hpp
+*/
+{
+    for (int i = 2; i < argc; i++){
+        if (((string)argv[i]) == "--id"){
+            r[_ID_] = ((string)argv[i+1]);
+            i++;
+        }
+        else if (((string)argv[i]) == "--title"){
+            r[_TITLE_] = ((string)argv[i+1]);
+            i++; 
+        }
+        else if (((string)argv[i]) == "--description"){
+            r[_DESCRIPTION_] = ((string)argv[i+1]);
+            i++;
+        }
+        else if (((string)argv[i]) == "--date"){
+            r[_DATE_] = ((string)argv[i+1]);
+            i++;
+        }
+        else if (((string)argv[i]) == "--priority"){
+            r[_PRIORITY_] = ((string)argv[i+1]);
+            i++;
+        }
+        else if (((string)argv[i]) == "--status"){
+            r[_STATUS_] = ((string)argv[i+1]);
+            i++;
+        }
+        else if (((string)argv[i]) == "--pourcentage"){
+            r[_POURCENTAGE_] = ((string)argv[i+1]);
+            i++;
+        }
+        else if (((string)argv[i]) == "--help"){
+            r[_HELP_] = "true";
+        }
+    }
+}
 
-void Extraire(int argc, char* argv[], TasksManager* T )
+void Set(string* args, Task* t)
+{
+    if (args[_DESCRIPTION_] != DEFAULT)
+        t->SetDescription(args[_DESCRIPTION_]);
+    if (args[_DATE_] != DEFAULT)
+        t->SetStartingDate(args[_DATE_]);
+    if (args[_PRIORITY_] != DEFAULT)
+        t->SetPriority(args[_PRIORITY_]);
+    if (args[_STATUS_] != DEFAULT)
+        t->SetStatus(args[_STATUS_]);
+    if (args[_POURCENTAGE_] != DEFAULT)
+        t->SetPourcentage(stoi(args[_POURCENTAGE_]));
+}
+
+
+void Extraire(string* args, TasksManager* T )
 /*
 Méthode qui extrait d'un TaskManager les critères demandés.
 C'est le coeur de la méthode list
 */
 {
-            //On cherche à présent si des critères sont spécifiés, et si c'est le cas on supprime ceux n'y répondant pas.
-        for (int i = 2; i < argc; i++){
-            if (((string)argv[i]) == "--id"){
-                int const id(stoi(argv[i+1])); //Je pose une variable ici pour plus de clarté, mais ce n'est pas nécessaire
-                T->KeepOnlyID(id);
-                i++;
-            }
-            else if (((string)argv[i]) == "--title"){
-                string const title(argv[i+1]);
-                T->KeepOnlyTitle(title);
-                i++; 
-            }
-            else if (((string)argv[i]) == "--description"){
-                string const description(argv[i+1]);
-                T->KeepOnlyDescription(description);
-                i++;
-            }
-            else if (((string)argv[i]) == "--date"){
-                string const date(argv[i+1]);
-                T->KeepOnlyStartingDate(date);
-                i++;
-            }
-            else if (((string)argv[i]) == "--priority"){
-                string const priority (argv[i+1]);
-                T->KeepOnlyPriority(priority);
-                i++;
-            }
-            else if (((string)argv[i]) == "--status"){
-                string const status(argv[i+1]);
-                T->KeepOnlyStatus(status);
-                i++;
-            }
-        }
+    if (args[_ID_] != DEFAULT)
+        T->KeepOnlyID(stoi(args[_ID_]));
+    if (args[_TITLE_] != DEFAULT)
+        T->KeepOnlyTitle(args[_TITLE_]);
+    if (args[_DESCRIPTION_] != DEFAULT)
+        T->KeepOnlyDescription(args[_DESCRIPTION_]);
+    if (args[_DATE_] != DEFAULT)
+        T->KeepOnlyStartingDate(args[_DATE_]);
+    if (args[_PRIORITY_] != DEFAULT)
+        T->KeepOnlyPriority(args[_PRIORITY_]);
+    if (args[_STATUS_] != DEFAULT)
+        T->KeepOnlyStatus(args[_STATUS_]);
+    if (args[_POURCENTAGE_] != DEFAULT)
+        T->KeepOnlyTitle(args[_POURCENTAGE_]);
 }
