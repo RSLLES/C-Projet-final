@@ -55,7 +55,7 @@ Erreur : le parametre '--title' est indispensable dans la creation d'une liste
 [...]
 ```
 
-Les exceptions sont gérées soit par l'indication ERREUR. Le logiciel est sensible à la case.
+Les exceptions sont gérées soit par l'indication ERREUR. Le logiciel est sensible à la casse.
 ```
 >> taskmgr.exe create --title "Crash test" --status Entamé --priority HiGh
 [6] Crash test :
@@ -78,7 +78,7 @@ Tache ajoutee.
 Utiliser seul, ce mot-clef permet de voir toute les tâches existantes.
 ```
 >> taskmgr.exe list
-4 tache(s) correspondant au(x) critere(s) demmande(s) trouvee(s).
+5 tache(s) correspondant au(x) critere(s) demmande(s) trouvee(s).
 [1] Preparer le dejeuner :
 Demarre le 31/3/2020
 Status : Open | Progression : 0/100 | Priorite : Normal
@@ -94,12 +94,40 @@ Status : Open | Progression : 0/100 | Priorite : Low
 [4] Crash test :
 Demarre le 31/3/2020
 Status : ERREUR | Progression : 0/100 | Priorite : ERREUR
+
+[5] RDV Dentiste : 5 avenue Hoche Paris
+Demarre le 1/4/2020
+Status : Open | Progression : 0/100 | Priorite : Normal
 ```
 
 Les mêmes paramètres que pour le mot-clef `create`peuvent être utilisés pour affiner la recherche aux taches répondant à tous les critères demandés. Les parametres `--titre` et `--description` vérifient si le text dspécifié apparrait dans le titre et respectivement la description des tâches.
 Quelques exemples :
 ```
 >> taskmgr.exe list --status Open
+3 tache(s) correspondant au(x) critere(s) demmande(s) trouvee(s).
+[1] Preparer le dejeuner :
+Demarre le 31/3/2020
+Status : Open | Progression : 0/100 | Priorite : Normal
+
+[3] Meeting avec Sarah : Verifier la progression du projet + bilan reunion du 12
+Demarre le 17/5/2020
+Status : Open | Progression : 0/100 | Priorite : Low
+
+[5] RDV Dentiste : 5 avenue Hoche Paris
+Demarre le 1/4/2020
+Status : Open | Progression : 0/100 | Priorite : Normal
+```
+
+```
+>> taskmgr.exe list --title "Dessin"
+1 tache(s) correspondant au(x) critere(s) demmande(s) trouvee(s).
+[2] Dessin industriel :
+Demarre le 31/3/2020
+Status : In Progress | Progression : 25/100 | Priorite : High
+```
+
+```
+taskmgr.exe list --status Open --title "a"
 2 tache(s) correspondant au(x) critere(s) demmande(s) trouvee(s).
 [1] Preparer le dejeuner :
 Demarre le 31/3/2020
@@ -111,15 +139,34 @@ Status : Open | Progression : 0/100 | Priorite : Low
 ```
 
 ```
+>> taskmgr.exe list --description "e" --priority Low
+1 tache(s) correspondant au(x) critere(s) demmande(s) trouvee(s).
+[3] Meeting avec Sarah : Verifier la progression du projet + bilan reunion du 12
+Demarre le 17/5/2020
+Status : Open | Progression : 0/100 | Priorite : Low
 ```
 
+Il est également possible de demander une seul tache en particulier si l'on connait son ID après avoir fait une recherche préalable.
 ```
+>> taskmgr.exe list --id 3
+1 tache(s) correspondant au(x) critere(s) demmande(s) trouvee(s).
+[3] Meeting avec Sarah : Verifier la progression du projet + bilan reunion du 12
+Demarre le 17/5/2020
+Status : Open | Progression : 0/100 | Priorite : Low
 ```
 
+De la même facon qu'avec `create`, un menuy d'aide est disponible
 ```
-```
-
-```
+taskmgr.exe list --help
+'liste' permet de lister les diff├⌐rentes taches enregistrees.
+Il est aussi possible de specifier certains criteres afin de reduire la liste.
+Parametres optionnels :
+   --id <ID> : Affiche la tache avec l'ID ci contre.
+   --title <titre> : Affiche les taches contenant <titre> dans leur titre (sensible ├á la casse).
+   --description <description> : Affiche les taches contenant <description> dans leur description (sensible ├á la casse).
+   --date <day>/<month>/<year> : Affiche les taches creee a la date indiquee.
+   --priority <priorite> : Affiche les tache de la priorite indiquee.
+   --status <status> : Affiche les t├óche du status indique.
 ```
 
 ### Commande change : modifie une tâche
