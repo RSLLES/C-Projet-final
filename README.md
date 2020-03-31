@@ -66,15 +66,10 @@ Tache ajoutee.
 
 La progression et la date prennent leur valeur par defaut.
 ```
->> taskmgr.exe create --title "Crash test" --progression Cinq
-[7] Crash test :
-Demarre le 31/3/2020
-Status : Open | Progression : 0/100 | Priorite : Normal
-Tache ajoutee.
-
->> taskmgr.exe create --title "Crash test" --date "N'importe quoi"
+>> taskmgr.exe create --title "Crash test" --date "N'importe quoi" --progression Cinq
+Crash test
 ERREUR : Impossible de convertir 'N'importe quoi' en une Date
-[8] Crash test :
+[9] Crash test :
 Demarre le 31/3/2020
 Status : Open | Progression : 0/100 | Priorite : Normal
 Tache ajoutee.
