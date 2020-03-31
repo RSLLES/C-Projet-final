@@ -6,12 +6,11 @@ Task Manager est un petit gestionnaire de tâche en ligne de commande permettant
 Exemple :
 
 ## Utilisation
-### Commande create : créer une nouvelle tâche
+### Commande `create` : créer une nouvelle tâche
 Initialement, la base de donnée est vide. Pour construire une tâche, on utilise le mot-clef `create`.
 Il est possible de se réferer à l'aide concernant cette commande avec le paramètre `--help`.
 ```
 >> taskmgr.exe create --help
-Erreur : le parametre '--title' est indispensable dans la creation d'une liste
 'create' permet de creer une nouvelle tache et de l'ajouter a la liste.
 Parametres obligatoires :
    --title <titre> : Permet de specifier le titre de la tache.
@@ -48,12 +47,37 @@ Status : Open | Progression : 0/100 | Priorite : Low
 Tache ajoutee.
 ```
 
-Si jamais celui ci est oublié, le programme ne créer aucune tache et affiche l'aide
+Si jamais celui `--title` est oublié, le programme ne créer aucune tâche et affiche l'aide
 ```
 >> taskmgr.exe create --description "Une tache sans titre" --date 12/12/2012
 Erreur : le parametre '--title' est indispensable dans la creation d'une liste
 'create' permet de creer une nouvelle tache et de l'ajouter a la liste.
 [...]
+```
+
+Les exceptions sont gérées soit par l'indication ERREUR. Le logiciel est sensible à la case.
+```
+>> taskmgr.exe create --title "Crash test" --status Entamé --priority HiGh
+[6] Crash test :
+Demarre le 31/3/2020
+Status : ERREUR | Progression : 0/100 | Priorite : ERREUR
+Tache ajoutee.
+```
+
+La progression et la date prennent leur valeur par defaut.
+```
+>> taskmgr.exe create --title "Crash test" --progression Cinq
+[7] Crash test :
+Demarre le 31/3/2020
+Status : Open | Progression : 0/100 | Priorite : Normal
+Tache ajoutee.
+
+>> taskmgr.exe create --title "Crash test" --date "N'importe quoi"
+ERREUR : Impossible de convertir 'N'importe quoi' en une Date
+[8] Crash test :
+Demarre le 31/3/2020
+Status : Open | Progression : 0/100 | Priorite : Normal
+Tache ajoutee.
 ```
 
 ### Commande list : lister les tâches existantes, et faire des recherches plus précises
