@@ -16,9 +16,8 @@ int main(int argc, char *argv[]){
     if (argc > 1 && ((string)argv[1]) == "create"){
         bool reussi = false;
 
-        //Si l'on a trouve un titre, alors on peut creer la tache
+        //Si l'on a trouve un titre  alors on peut creer la tache
         if (args[_TITLE_] != DEFAULT){
-            cout << args[_TITLE_] << endl;
             //On charge le TaskManager
             TasksManager T("Data.txt");
             //On créer et ajoute notre Tache
@@ -36,8 +35,8 @@ int main(int argc, char *argv[]){
             t->Print();
             cout << endl << "Tache ajoutee." << endl;
         }
-        //Sinon, il y a une erreur et l'on affiche l'aide
-        else
+        //Sinon, il y a une erreur et l'on affiche l'aide (sauf si afficher l'aide était le but intial)
+        else if (args[_HELP_] != DEFAULT)
         {
             cout << "Erreur : le parametre '--title' est indispensable dans la creation d'une liste" << endl;
         }
@@ -46,13 +45,13 @@ int main(int argc, char *argv[]){
         if (args[_HELP_] != DEFAULT || !reussi){
             cout << "'create' permet de creer une nouvelle tache et de l'ajouter a la liste." << endl;
             cout << "Parametres obligatoires : " << endl;
-            cout << "   --title <titre> : permet de specifier le titre de la tache." << endl;
-            cout << "Parametres optionnelles : " << endl;
-            cout << "   --description <description> : donne une description du travail de la tache." << endl;
-            cout << "   --date <day>/<month>/<year> : Definie une année sous le format suivant. Par defaut, la date est celle d'aujourd'hui." << endl;
-            cout << "   --priority <priorite> : Donne une priorite a la tache. Les seules priorites autorisees sont 'High', 'Normal' et 'Low'. Tout autre entree donnera comme priorite 'ERREUR'." << endl;
-            cout << "   --status <status> : Definie le status de la tache. Les status autorises sont 'Open', 'Close' et 'Progress'. Tout autre entree donnera comme priorite 'ERREUR'." << endl;
-            cout << "   --pourcentage <ENTIER ENTRE 0 et 100> : Définie le taux d'avancement de la tâche. " << endl;
+            cout << "   --title <titre> : Permet de specifier le titre de la tache." << endl;
+            cout << "Parametres optionnels : " << endl;
+            cout << "   --description <description> : Donne une description du travail de la tache." << endl;
+            cout << "   --date <day>/<month>/<year> : Definie une annee sous le format suivant. Par defaut, la date est celle d'aujourd'hui." << endl;
+            cout << "   --priority [High,Normal,Low] : Donne une priorite a la tache parmi les trois disponibles. Tout autre entree donnera comme priorite 'ERREUR'." << endl;
+            cout << "   --status [Open,In Progress,Close] : Definie le status de la tache. Tout autre entree donnera comme priorite 'ERREUR'." << endl;
+            cout << "   --pourcentage <ENTIER ENTRE 0 et 100> : Definie le taux d'avancement de la tache. " << endl;
         }
     }
 
@@ -76,9 +75,9 @@ int main(int argc, char *argv[]){
 
         //Enfin, on affiche l'aide si necessaire
         else{
-            cout << "'liste' permet de lister les différentes taches enregistres." << endl;
+            cout << "'liste' permet de lister les différentes taches enregistrees." << endl;
             cout << "Il est aussi possible de specifier certains criteres afin de reduire la liste." << endl;
-            cout << "Parametres optionnelles : " << endl;
+            cout << "Parametres optionnels : " << endl;
             cout << "   --id <ID> : Affiche la tache avec l'ID ci contre." << endl;
             cout << "   --title <titre> : Affiche les taches contenant <titre> dans leur titre (sensible à la casse). " << endl;
             cout << "   --description <description> : Affiche les taches contenant <description> dans leur description (sensible à la casse)." << endl;
@@ -130,7 +129,6 @@ int main(int argc, char *argv[]){
                 cout << "Annule." << endl;
                 reussi = true;
             }
-            
         }
         else
         {
@@ -149,7 +147,6 @@ int main(int argc, char *argv[]){
             cout << "   --status <status> : Affiche les tâche du status indique." << endl;
             cout << "ATTENTION : Sans criteres, delete supprimera toutes les taches existantes" << endl;
         }
-        
     }
 
     //4) Mot clef change
@@ -257,6 +254,11 @@ Les différentes constantes sont définies dans main.hpp
         else if (((string)argv[i]) == "--help"){
             r[_HELP_] = "true";
         }
+        else
+        {
+            cout << "Parametre '" << argv[i] <<"' inconnu." << endl;
+        }
+        
     }
 }
 
