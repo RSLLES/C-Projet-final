@@ -183,5 +183,47 @@ Demarre le 1/4/2020
 Status : In Progress | Progression : 50/100 | Priorite : High
 ```
 
+### Commande `delete` : supprime les tâches répondant à des critères possibles
+`delete` supprime des taches.
+Il est possible de spécifier la tache a supprimer par son id :
+```
+>> taskmgr.exe delete --id 3
+1 tache(s) supprimee(s).
+```
+Tout comme `list`, il est possible de selectionner les taches à modifier à l'aide de certain critères.
+Par exemple, pour supprimer tous les taches créées le 31 mars :
+```
+>> taskmgr.exe delete --date 31/3/2020
+[1] Preparer le dejeuner :
+Demarre le 31/3/2020
+Status : Open | Progression : 0/100 | Priorite : Normal
 
-### Commande delete : supprime les tâches répondant à des critères possibles
+[4] Crash test :
+Demarre le 31/3/2020
+Status : ERREUR | Progression : 0/100 | Priorite : ERREUR
+
+ATTENTION : l'operation delete va supprimer les 2 taches affichees ci dessus.
+Confirmer ? ('o' pour oui) : o
+
+2 tache(s) supprimee(s).
+```
+
+Attention : utiliser `delete` supprime toutes les taches !
+```
+>> taskmgr.exe delete
+[2] Dessin industriel :
+Demarre le 1/4/2020
+Status : In Progress | Progression : 50/100 | Priorite : High
+
+[5] RDV Dentiste : 5 avenue Hoche Paris
+Demarre le 1/4/2020
+Status : Open | Progression : 0/100 | Priorite : Normal
+
+ATTENTION : l'operation delete va supprimer les 2 taches affichees ci dessus.
+Confirmer ? ('o' pour oui) : o
+
+2 tache(s) supprimee(s).
+
+>> taskmgr.exe list
+Aucune tache ne satisfait tous les criteres de la recherche.
+```
