@@ -127,15 +127,11 @@ Status : In Progress | Progression : 25/100 | Priorite : High
 ```
 
 ```
-taskmgr.exe list --status Open --title "a"
-2 tache(s) correspondant au(x) critere(s) demmande(s) trouvee(s).
+taskmgr.exe list --status Open --title "a" --date "31/3/2020"
+1 tache(s) correspondant au(x) critere(s) demmande(s) trouvee(s).
 [1] Preparer le dejeuner :
 Demarre le 31/3/2020
 Status : Open | Progression : 0/100 | Priorite : Normal
-
-[3] Meeting avec Sarah : Verifier la progression du projet + bilan reunion du 12
-Demarre le 17/5/2020
-Status : Open | Progression : 0/100 | Priorite : Low
 ```
 
 ```
@@ -169,7 +165,65 @@ Parametres optionnels :
    --status <status> : Affiche les t├óche du status indique.
 ```
 
-### Commande change : modifie une tâche
+### Commande `change` : modifie une tâche
+`change` permet de modifier une tache déjà existante.
+Il est indispensable de fournir le paramètre `--id` pour spécifier la tache à modifier.
+A partir de là, il suffit d'utiliser les arguments classiques précédent pour spécifier les champs que l'on souhaite modifier..
+```
+>> taskmgr.exe change --id 2 --date 1/4/2020 --pourcentage 50
+Tache avant modification:
+[2] Dessin industriel :
+Demarre le 31/3/2020
+Status : In Progress | Progression : 25/100 | Priorite : High
+########
 
+Tache modifiee :
+[2] Dessin industriel :
+Demarre le 1/4/2020
+Status : In Progress | Progression : 50/100 | Priorite : High
+```
 
-### Commande delete : supprime les tâches répondant à des critères possibles
+### Commande `delete` : supprime les tâches répondant à des critères possibles
+`delete` supprime des taches.
+Il est possible de spécifier la tache a supprimer par son id :
+```
+>> taskmgr.exe delete --id 3
+1 tache(s) supprimee(s).
+```
+Tout comme `list`, il est possible de selectionner les taches à modifier à l'aide de certain critères.
+Par exemple, pour supprimer tous les taches créées le 31 mars :
+```
+>> taskmgr.exe delete --date 31/3/2020
+[1] Preparer le dejeuner :
+Demarre le 31/3/2020
+Status : Open | Progression : 0/100 | Priorite : Normal
+
+[4] Crash test :
+Demarre le 31/3/2020
+Status : ERREUR | Progression : 0/100 | Priorite : ERREUR
+
+ATTENTION : l'operation delete va supprimer les 2 taches affichees ci dessus.
+Confirmer ? ('o' pour oui) : o
+
+2 tache(s) supprimee(s).
+```
+
+Attention : utiliser `delete` supprime toutes les taches !
+```
+>> taskmgr.exe delete
+[2] Dessin industriel :
+Demarre le 1/4/2020
+Status : In Progress | Progression : 50/100 | Priorite : High
+
+[5] RDV Dentiste : 5 avenue Hoche Paris
+Demarre le 1/4/2020
+Status : Open | Progression : 0/100 | Priorite : Normal
+
+ATTENTION : l'operation delete va supprimer les 2 taches affichees ci dessus.
+Confirmer ? ('o' pour oui) : o
+
+2 tache(s) supprimee(s).
+
+>> taskmgr.exe list
+Aucune tache ne satisfait tous les criteres de la recherche.
+```
