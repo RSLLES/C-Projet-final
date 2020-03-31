@@ -67,7 +67,6 @@ Tache ajoutee.
 La progression et la date prennent leur valeur par defaut.
 ```
 >> taskmgr.exe create --title "Crash test" --date "N'importe quoi" --progression Cinq
-Crash test
 ERREUR : Impossible de convertir 'N'importe quoi' en une Date
 [9] Crash test :
 Demarre le 31/3/2020
@@ -75,7 +74,53 @@ Status : Open | Progression : 0/100 | Priorite : Normal
 Tache ajoutee.
 ```
 
-### Commande list : lister les tâches existantes, et faire des recherches plus précises
+### Commande `list` : lister les tâches existantes, et faire des recherches plus précises
+Utiliser seul, ce mot-clef permet de voir toute les tâches existantes.
+```
+>> taskmgr.exe list
+4 tache(s) correspondant au(x) critere(s) demmande(s) trouvee(s).
+[1] Preparer le dejeuner :
+Demarre le 31/3/2020
+Status : Open | Progression : 0/100 | Priorite : Normal
+
+[2] Dessin industriel :
+Demarre le 31/3/2020
+Status : In Progress | Progression : 25/100 | Priorite : High
+
+[3] Meeting avec Sarah : Verifier la progression du projet + bilan reunion du 12
+Demarre le 17/5/2020
+Status : Open | Progression : 0/100 | Priorite : Low
+
+[4] Crash test :
+Demarre le 31/3/2020
+Status : ERREUR | Progression : 0/100 | Priorite : ERREUR
+```
+
+Les mêmes paramètres que pour le mot-clef `create`peuvent être utilisés pour affiner la recherche aux taches répondant à tous les critères demandés. Les parametres `--titre` et `--description` vérifient si le text dspécifié apparrait dans le titre et respectivement la description des tâches.
+Quelques exemples :
+```
+>> taskmgr.exe list --status Open
+2 tache(s) correspondant au(x) critere(s) demmande(s) trouvee(s).
+[1] Preparer le dejeuner :
+Demarre le 31/3/2020
+Status : Open | Progression : 0/100 | Priorite : Normal
+
+[3] Meeting avec Sarah : Verifier la progression du projet + bilan reunion du 12
+Demarre le 17/5/2020
+Status : Open | Progression : 0/100 | Priorite : Low
+```
+
+```
+```
+
+```
+```
+
+```
+```
+
+```
+```
 
 ### Commande change : modifie une tâche
 
